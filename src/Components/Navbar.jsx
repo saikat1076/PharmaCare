@@ -105,13 +105,13 @@ const Navbar = () => {
                                 tabIndex={0}
                                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                                 <li>
-                                    <button className="btn btn-sm bg-[#87d6e1] text-white text-sm ml-2">
-                                        Update Profile
-                                    </button>
+                                    <NavLink to='/dashboard' className="btn btn-sm bg-[#87d6e1] text-white text-sm ml-2">
+                                        Dashboard
+                                    </NavLink>
                                 </li>
-                                <li><button className="btn btn-sm bg-[#87d6e1] text-white text-sm ml-2">
-                                    Dashboard
-                                </button></li>
+                                <li><NavLink to='/update-profile' className="btn btn-sm bg-[#87d6e1] text-white text-sm ml-2">
+                                Update Profile
+                                </NavLink></li>
                                 <li>
                                     <button
                                         onClick={logOut}

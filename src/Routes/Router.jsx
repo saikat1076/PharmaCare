@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-    createBrowserRouter
-  } from "react-router-dom";
+  createBrowserRouter
+} from "react-router-dom";
 import Home from '../Pages/Home';
 import Layouts from '../Layouts/Layouts';
 import Login from '../Pages/Login';
@@ -10,53 +10,75 @@ import Register from '../Pages/Register';
 import Shop from '../Pages/Shop';
 import CategoryDetails from '../Pages/CategoryDetails';
 import Cart from '../Pages/Cart';
+import UpdateProfile from '../Pages/Dropdown/UpdateProfile';
+import Dashboard from '../Layouts/Dashboard';
+import ManageCategory from '../Pages/Dashboard/ManageCategory';
 
 
 
-const Router =createBrowserRouter([
-    {
+const Router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layouts></Layouts>,
+    children: [
+      {
         path: "/",
-        element: <Layouts></Layouts>,
-        children: [
-            {
-              path: "/",
-              element: <Home></Home>
-            },
-            {
-              path: "/shop",
-              element: <Shop></Shop>
-            },
-            {
-              path: "/categoryDetails/:category",
-              element: <CategoryDetails></CategoryDetails>
-            },
-            
-            {
-              path: "/categoryDetails",
-              element: <CategoryDetails></CategoryDetails>
-            },
-            {
-              path: "/cart",
-              element: <Cart></Cart>
-            },
-            
-        ]
-    },
-
-    {
-        path: "auth",
-        element: <AuthLayouts></AuthLayouts>,
-        children: [
-          {
-            path: "/auth/login",
-            element: <Login></Login>,
-          },
-          {
-            path: "/auth/register",
-            element: <Register></Register>,
-          },
-        ],
+        element: <Home></Home>
       },
-  ]);
+      {
+        path: "/shop",
+        element: <Shop></Shop>
+      },
+      {
+        path: "/categoryDetails/:category",
+        element: <CategoryDetails></CategoryDetails>
+      },
+
+      {
+        path: "/categoryDetails",
+        element: <CategoryDetails></CategoryDetails>
+      },
+      {
+        path: "/cart",
+        element: <Cart></Cart>
+      },
+      {
+        path: "/update-profile",
+        element: <UpdateProfile></UpdateProfile>
+      },
+
+    ]
+  },
+
+  {
+    path: "auth",
+    element: <AuthLayouts></AuthLayouts>,
+    children: [
+      {
+        path: "/auth/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/auth/register",
+        element: <Register></Register>,
+      },
+    ],
+  },
+
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+
+      {
+        path: "manage-category",
+        element: <ManageCategory></ManageCategory>
+      }
+    ]
+  }
+
+
+
+]);
 
 export default Router;
