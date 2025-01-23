@@ -7,6 +7,11 @@ import Layouts from '../Layouts/Layouts';
 import Login from '../Pages/Login';
 import AuthLayouts from '../Layouts/AuthLayouts';
 import Register from '../Pages/Register';
+import Shop from '../Pages/Shop';
+import CategoryDetails from '../Pages/CategoryDetails';
+import Cart from '../Pages/Cart';
+
+
 
 const Router =createBrowserRouter([
     {
@@ -16,6 +21,23 @@ const Router =createBrowserRouter([
             {
               path: "/",
               element: <Home></Home>
+            },
+            {
+              path: "/shop",
+              element: <Shop></Shop>
+            },
+            {
+              path: "/categoryDetails/:category",
+              element: <CategoryDetails></CategoryDetails>
+            },
+            
+            {
+              path: "/categoryDetails",
+              element: <CategoryDetails></CategoryDetails>
+            },
+            {
+              path: "/cart",
+              element: <Cart></Cart>
             },
             
         ]

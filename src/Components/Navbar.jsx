@@ -1,8 +1,12 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import { Link, NavLink } from 'react-router-dom';
+import { FaShoppingCart } from 'react-icons/fa';
+import useCart from '../Hooks/useCart';
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+    const [cart] = useCart();
     const navLinks = <>
         <NavLink
             className={({ isActive }) =>
@@ -24,12 +28,35 @@ const Navbar = () => {
             }
             to="/shop"
         >
-           Shop
+            Shop
+        </NavLink>
+        <NavLink
+            className={({ isActive }) =>
+                `font-bold text-base leading-none ${isActive
+                    ? "text-amber-300 border-b-2 border-amber-300"
+                    : "text-white"
+                }`
+            }
+            to="/categoryDetails"
+        >
+            Category Details
+        </NavLink>
+        <NavLink className={({ isActive }) =>
+            `font-bold text-base leading-none ${isActive
+                ? "text-amber-300 border-b-2 border-amber-300"
+                : "text-white"
+            }`
+        }
+            to="/cart">
+            <button className='flex'>
+                <FaShoppingCart></FaShoppingCart>
+                <div className="badge badge-secondary">+{cart.length}</div>
+            </button>
         </NavLink>
     </>;
 
-    const { user, logOut } = useContext(AuthContext);
-    
+   
+
     return (
         <div className="navbar min-h-0 fixed z-10 backdrop-blur-lg bg-opacity-30 lg:px-5 bg-black place-items-center">
             <div className="navbar-start">
@@ -68,7 +95,7 @@ const Navbar = () => {
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                                 <div className="w-8 rounded-full">
                                     <img
-                                        src={user?.photoURL || profilePic}
+                                        src={user?.photoURL}
                                         alt="User"
                                         className="w-8 h-8 rounded-full cursor-pointer"
                                     />

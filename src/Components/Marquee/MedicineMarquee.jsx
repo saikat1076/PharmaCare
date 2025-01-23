@@ -43,7 +43,7 @@ const MedicineMarquee = () => {
   ];
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 py-2">
       <Title subHeading="Sponsored by" heading="Bangladesh's largest pharmaceutical company" ></Title>
       <Marquee gradient={false} speed={50} loop={0}>
         {sponsors.map((sponsor, index) => (

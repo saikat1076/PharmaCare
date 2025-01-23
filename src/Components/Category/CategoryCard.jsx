@@ -4,9 +4,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
 import Title from "../Shared/Title";
+import { useNavigate } from "react-router-dom";
 
 const CategoryCard = () => {
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   // Fetch categories from MongoDB using Axios
   const fetchCategories = async () => {
@@ -22,6 +24,10 @@ const CategoryCard = () => {
     AOS.init({ duration: 1000 });
     fetchCategories(); // Fetch categories when the component loads
   }, []);
+  const handleCategory = (item) => {
+    // Ensure category is passed correctly
+    navigate(`/categoryDetails/${item.category}`);  // Correct route
+  };
 
   return (
     <div className="container mx-auto px-4">
@@ -34,6 +40,7 @@ const CategoryCard = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             data-aos="zoom-in"
+            onClick={() => handleCategory(category)}
           >
             <img
               src={category.image}
