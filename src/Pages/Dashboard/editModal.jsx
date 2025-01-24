@@ -2,11 +2,21 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const EditModal = ({ setShowEditModal, editCategory, setCategory }) => {
+const EditModal = ({ setShowEditModal, editCategory, queryClient }) => {
   const [updatedCategory, setUpdatedCategory] = useState({
     category: editCategory.category,
     image: editCategory.image,
   });
+
+  // Sync updatedCategory with editCategory prop
+  useEffect(() => {
+    if (editCategory) {
+      setUpdatedCategory({
+        category: editCategory.category,
+        image: editCategory.image,
+      });
+    }
+  }, [editCategory]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -25,16 +35,8 @@ const EditModal = ({ setShowEditModal, editCategory, setCategory }) => {
       );
       console.log("Response from update:", response.data);
 
-      // Ensure the category is updated in the state
-      setCategory((prev) => {
-        // Update the category list by replacing the old category with the updated one
-        const updatedCategoryList = prev.map((item) =>
-          item._id === editCategory._id ? response.data : item
-        );
-
-        console.log("Updated category list:", updatedCategoryList);  // For debugging
-        return updatedCategoryList;
-      });
+      // Invalidate and refetch the category data after updating
+      queryClient.invalidateQueries({ queryKey: ['category'] }); 
 
       toast.success('Category updated successfully!');
       setShowEditModal(false); // Close the modal after update

@@ -1,50 +1,23 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
-const AddModal = ({ setShowModal, setCategory }) => {
+const AddModal = ({ setShowModal, addCategoryMutation }) => {
   const [categoryName, setCategoryName] = useState('');
   const [categoryImageUrl, setCategoryImageUrl] = useState('');
-  const [imageFile, setImageFile] = useState(null);
-  const [isUrl, setIsUrl] = useState(true); // Flag to toggle between URL and file upload
-  const [medicineCount, setMedicineCount] = useState(0); // New field for medicine count
+  const [medicineCount, setMedicineCount] = useState(0);
 
-  // Handling form submission
-  const handleSubmit = async (e) => {
+  // Handle form submission
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    let imageUrl = categoryImageUrl;
-
-    // If an image is uploaded, handle the file upload
-    if (!isUrl && imageFile) {
-      const formData = new FormData();
-      formData.append('image', imageFile);
-
-      try {
-        const response = await axios.post('/api/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        imageUrl = response.data.imageUrl; // Assuming the API returns the image URL
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        return;
-      }
-    }
-
+    // Ensure medicine count is a number (in case the input is a string)
     const newCategory = {
       category: categoryName,
-      image: imageUrl,
-      medicineCount: medicineCount, // Include the medicine count
+      image: categoryImageUrl,  // Assuming you're using the URL of the image
+      medicineCount: Number(medicineCount),  // Convert to a number
     };
 
-    try {
-      const response = await axios.post('http://localhost:5000/category', newCategory);
-      setCategory(prevCategories => [...prevCategories, response.data]); // Update the category list immediately
-      setShowModal(false);
-    } catch (error) {
-      console.error("Error adding category:", error);
-    }
+    // Trigger the mutation to add the new category
+    addCategoryMutation.mutate(newCategory);
   };
 
   return (
@@ -63,75 +36,41 @@ const AddModal = ({ setShowModal, setCategory }) => {
               required
             />
           </div>
-
-          {/* Medicine Count Input */}
+          
+          <div className="form-control mb-4">
+            <label className="label">Category Image URL</label>
+            <input
+              type="text"
+              placeholder="Image URL"
+              value={categoryImageUrl}
+              onChange={(e) => setCategoryImageUrl(e.target.value)}
+              className="input input-bordered"
+              required
+            />
+          </div>
+          
           <div className="form-control mb-4">
             <label className="label">Medicine Count</label>
             <input
               type="number"
-              min="0"
-              placeholder="Medicine Count"
               value={medicineCount}
-              onChange={(e) => setMedicineCount(Number(e.target.value))}
+              onChange={(e) => setMedicineCount(e.target.value)}
               className="input input-bordered"
               required
             />
           </div>
 
-          {/* Toggle between URL input and file upload */}
-          <div className="form-control mb-4">
-            <label className="label">Choose Category Image Method</label>
-            <div className="flex items-center">
-              <label className="mr-4">
-                <input
-                  type="radio"
-                  name="image-method"
-                  checked={isUrl}
-                  onChange={() => setIsUrl(true)}
-                />
-                &nbsp; Enter Image URL
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="image-method"
-                  checked={!isUrl}
-                  onChange={() => setIsUrl(false)}
-                />
-                &nbsp; Upload Image
-              </label>
-            </div>
-          </div>
-
-          {/* If 'Enter Image URL' is selected */}
-          {isUrl ? (
-            <div className="form-control mb-4">
-              <label className="label">Category Image URL</label>
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={categoryImageUrl}
-                onChange={(e) => setCategoryImageUrl(e.target.value)}
-                className="input input-bordered"
-                required
-              />
-            </div>
-          ) : (
-            // If 'Upload Image' is selected
-            <div className="form-control mb-4">
-              <label className="label">Upload Image</label>
-              <input
-                type="file"
-                onChange={(e) => setImageFile(e.target.files[0])}
-                className="input input-bordered"
-                required
-              />
-            </div>
-          )}
-
           <div className="modal-action">
-            <button type="submit" className="btn btn-primary">Save Category</button>
-            <button type="button" onClick={() => setShowModal(false)} className="btn">Cancel</button>
+            <button type="submit" className="btn btn-primary">
+              Save Category
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowModal(false)}
+              className="btn"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>

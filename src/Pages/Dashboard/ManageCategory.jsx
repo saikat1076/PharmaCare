@@ -1,49 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddModal from './addModal'; // Importing modal component
 import EditModal from './editModal'; // Importing edit modal component
 
+// Fetch categories from API
+const fetchCategory = async () => {
+  const response = await axios.get('http://localhost:5000/category');
+  return response.data;
+};
+
+// Manage categories component
 const ManageCategory = () => {
-  const [category, setCategory] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editCategory, setEditCategory] = useState(null); // To track the category being edited
+  const [editCategory, setEditCategory] = useState(null);
 
-  // Fetching category from the server
-  useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/category');
-        setCategory(response.data);
-      } catch (error) {
-        console.error('Error fetching category:', error);
-        toast.error('Failed to fetch category');
-      }
-    };
+  const queryClient = useQueryClient(); // Access the query client
 
-    fetchCategory();
-  }, []);
+  // Fetch category data
+  const { data: category, isLoading, isError } = useQuery({
+    queryKey: ['category'],
+    queryFn: fetchCategory,
+  });
 
-  // Delete a category
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/category/${id}`);
-      setCategory(category.filter((item) => item._id !== id)); // Update the state
+  // Delete mutation
+  const deleteCategory = async (id) => {
+    await axios.delete(`http://localhost:5000/category/${id}`);
+  };
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['category'] }); // Refetch categories after deletion
       toast.success('Category deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting category:', error);
+    },
+    onError: () => {
       toast.error('Failed to delete category');
-    }
+    },
+  });
+
+  // Handle deletion of category
+  const handleDelete = (id) => {
+    deleteMutation.mutate(id);
   };
 
-  // Handle Edit Button Click
+  // Handle edit action
   const handleEdit = (item) => {
-    console.log("Setting edit category:", item);  // Ensure the category is correctly passed
-    setEditCategory(item); // Set the category to be edited
-    setShowEditModal(true); // Open the edit modal
+    setEditCategory(item);
+    setShowEditModal(true);
   };
+
+  // Mutation to add a new category
+  const addCategoryMutation = useMutation({
+    mutationFn: async (newCategory) => {
+      const response = await axios.post('http://localhost:5000/category', newCategory);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['category'] }); // Refetch categories after adding
+      toast.success('Category added successfully!');
+      setShowModal(false); // Close modal on success
+    },
+    onError: () => {
+      toast.error('Failed to add category');
+    },
+  });
+
+  // Handle loading and error states
+  if (isLoading) return <div>Loading categories...</div>;
+  if (isError) return <div>Error loading categories.</div>;
 
   return (
     <div>
@@ -63,44 +91,50 @@ const ManageCategory = () => {
           </tr>
         </thead>
         <tbody>
-          {category.map((item) => (
-            <tr key={item._id}> {/* Unique key for each item */}
-              <td>{item.category}</td>
-              <td>
-                <img
-                  src={item.image}
-                  alt={item.category}
-                  className="w-16 h-16 object-cover"
-                />
-              </td>
-              <td>
-                <button
-                  onClick={() => handleEdit(item)} // Open edit modal
-                  className="btn btn-secondary mr-2"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(item._id)} // Pass _id for deletion
-                  className="btn btn-danger"
-                >
-                  Delete
-                </button>
-              </td>
+          {category && category.length > 0 ? (
+            category.map((item) => (
+              <tr key={item._id}>
+                <td>{item.category}</td>
+                <td>
+                  <img
+                    src={item.image}
+                    alt={item.category}
+                    className="w-16 h-16 object-cover"
+                  />
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleEdit(item)}
+                    className="btn btn-secondary mr-2"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(item._id)}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="text-center">No categories available</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
-      {/* Show AddModal */}
-      {showModal && <AddModal setShowModal={setShowModal} setCategory={setCategory} />}
+      {/* Show AddModal when showModal is true */}
+      {showModal && <AddModal setShowModal={setShowModal} addCategoryMutation={addCategoryMutation} />}
 
-      {/* Show EditModal */}
+      {/* Show EditModal when showEditModal is true */}
       {showEditModal && (
         <EditModal
           setShowEditModal={setShowEditModal}
           editCategory={editCategory}
-          setCategory={setCategory}
+          queryClient={queryClient} // Pass queryClient to EditModal
         />
       )}
 
@@ -109,4 +143,4 @@ const ManageCategory = () => {
   );
 };
 
-export default ManageCategory;
+export default ManageCategory;
