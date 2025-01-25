@@ -16,6 +16,7 @@ import ManageCategory from '../Pages/Dashboard/ManageCategory';
 import ManageMedicines from '../Pages/Dashboard/ManageMedicines';
 import ManageUsers from '../Pages/Dashboard/ManageUsers';
 import Payments from '../Pages/Dashboard/Payment/Payments';
+import PaymentHistory from '../Pages/Dashboard/PaymentHistory';
 import InvoicePage from '../Pages/Invoice';
 import SalesReport from '../Pages/Dashboard/SalesReport';
 
@@ -98,6 +99,10 @@ const Router = createBrowserRouter([
       {
         path: "payment",
         element: <Payments></Payments>
+      },
+      {
+        path: "payment-history",
+        element: <PaymentHistory></PaymentHistory>
       }
     ]
   }

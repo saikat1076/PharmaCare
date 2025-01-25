@@ -16,26 +16,56 @@ const SalesReport = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        // Fetch cart and payment data
         const [cartsRes, paymentsRes] = await Promise.all([
           fetch("http://localhost:5000/carts").then((res) => res.json()),
           fetch("http://localhost:5000/payments").then((res) => res.json()),
         ]);
 
         // Add status to carts and payments
-        const filteredCarts = cartsRes.map((item) => ({ ...item, status: "Pending" }));
-        const filteredPayments = paymentsRes.map((item) => ({ ...item, status: "Paid" }));
+        const updatedCarts = cartsRes.map((item) => ({ ...item, status: "Pending" }));
+        const updatedPayments = paymentsRes.map((item) => ({ ...item, status: "Paid" }));
 
-        setCartData(filteredCarts);
-        setPaymentData(filteredPayments);
+        // Set cart and payment data
+        setCartData(updatedCarts);
+        setPaymentData(updatedPayments);
 
-        // Combine cart and payment data for display
-        setFilteredData([...filteredCarts, ...filteredPayments]);
+        // Combine the cart and payment data
+        const combinedData = updatedPayments.map((payment) => {
+          // Match cart data with payment cartIds
+          const cartItems = payment.cartIds.map((cartId) => {
+            return updatedCarts.find((cart) => cart._id === cartId);
+          });
+
+          // Combine cart items with payment data
+          return cartItems.map((item, index) => {
+            const totalPrice = item ? item.perUnitPrice : 0; // Calculate TotalPrice
+
+            return {
+              ItemName: payment.ItemName[index],
+              SellerEmail: payment.SellerEmail[index],
+              BuyerEmail: payment.email,
+              TotalPrice: totalPrice, // Add TotalPrice to the row
+              TransactionId: payment.transactionId,
+              Date: payment.date,
+              Status: payment.status, // Payment status should be "Paid"
+              // Additional cart info
+              Category: item ? item.category : "N/A",
+              Company: item ? item.company : "N/A",
+              ItemMassUnit: item ? item.itemMassUnit : "N/A",
+              Image: item ? item.image : "N/A",
+            };
+          });
+        }).flat(); // Flatten the array if multiple items exist per payment
+
+        setFilteredData(combinedData); // Update filtered data
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -45,8 +75,9 @@ const SalesReport = () => {
     const startDate = new Date(dateRange.start);
     const endDate = new Date(dateRange.end);
 
-    const filtered = [...cartData, ...paymentData].filter((item) => {
-      const date = new Date(item.date);
+    // Filter combined data by date
+    const filtered = filteredData.filter((item) => {
+      const date = new Date(item.Date);
       return date >= startDate && date <= endDate;
     });
     setFilteredData(filtered);
@@ -59,11 +90,11 @@ const SalesReport = () => {
     const tableData = filteredData.map((item) => [
       item.ItemName || "N/A",
       item.SellerEmail || "N/A",
-      item.email || "N/A",
-      item.totalPrice || item.price || "N/A",
-      item.transactionId || "N/A",
-      item.date || "N/A",
-      item.status || "N/A",
+      item.BuyerEmail || "N/A",
+      item.TotalPrice || "N/A", // TotalPrice should be in the table
+      item.TransactionId || "N/A",
+      item.Date || "N/A",
+      item.Status || "N/A", // Status should show "Paid" for payments
     ]);
 
     doc.autoTable({
@@ -84,11 +115,11 @@ const SalesReport = () => {
   const columns = [
     { name: "Item Name", selector: (row) => row.ItemName || "N/A", sortable: true },
     { name: "Seller Email", selector: (row) => row.SellerEmail || "N/A", sortable: true },
-    { name: "Buyer Email", selector: (row) => row.email || "N/A", sortable: true },
-    { name: "Total Price", selector: (row) => row.totalPrice || row.price || "N/A", sortable: true },
-    { name: "Transaction ID", selector: (row) => row.transactionId || "N/A", sortable: true },
-    { name: "Date", selector: (row) => row.date || "N/A", sortable: true },
-    { name: "Status", selector: (row) => row.status || "N/A", sortable: true },
+    { name: "Buyer Email", selector: (row) => row.BuyerEmail || "N/A", sortable: true },
+    // { name: "Total Price", selector: (row) => row.TotalPrice || "N/A", sortable: true },
+    { name: "Transaction ID", selector: (row) => row.TransactionId || "N/A", sortable: true },
+    { name: "Date", selector: (row) => row.Date || "N/A", sortable: true },
+    { name: "Status", selector: (row) => row.Status || "N/A", sortable: true },
   ];
 
   return (
@@ -97,7 +128,7 @@ const SalesReport = () => {
 
       {/* Filters Section */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
-        <div className="flex flex-col md:flex-row items-center gap-2">
+        <div className="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
           <input
             type="date"
             className="border p-2 rounded w-full md:w-auto"
@@ -111,7 +142,7 @@ const SalesReport = () => {
             onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
           />
           <button
-            className="px-4 py-2 bg-blue-500 text-white rounded w-full md:w-auto"
+            className="px-3 py-2 bg-blue-500 text-white rounded w-full md:w-auto"
             onClick={handleDateFilter}
           >
             Filter by Date
@@ -119,9 +150,9 @@ const SalesReport = () => {
         </div>
 
         {/* Export Buttons */}
-        <div className="flex flex-col md:flex-row items-center gap-2">
+        <div className="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
           <button
-            className="px-4 py-2 bg-purple-500 text-white rounded w-full md:w-auto"
+            className="px-3 py-2 bg-purple-500 text-white rounded w-full md:w-auto"
             onClick={exportToPDF}
           >
             Export to PDF
@@ -129,12 +160,12 @@ const SalesReport = () => {
           <CSVLink
             data={filteredData}
             filename="Sales_Report.csv"
-            className="px-4 py-2 bg-green-500 text-white rounded w-full md:w-auto text-center"
+            className="px-3 py-2 bg-green-500 text-white rounded w-full md:w-auto text-center"
           >
             Export to CSV
           </CSVLink>
           <button
-            className="px-4 py-2 bg-yellow-500 text-white rounded w-full md:w-auto"
+            className="px-3 py-2 bg-yellow-500 text-white rounded w-full md:w-auto"
             onClick={exportToXLSX}
           >
             Export to Excel
@@ -155,4 +186,4 @@ const SalesReport = () => {
   );
 };
 
-export default SalesReport;
+export default SalesReport;
