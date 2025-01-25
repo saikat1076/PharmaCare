@@ -14,6 +14,7 @@ import UpdateProfile from '../Pages/Dropdown/UpdateProfile';
 import Dashboard from '../Layouts/Dashboard';
 import ManageCategory from '../Pages/Dashboard/ManageCategory';
 import ManageMedicines from '../Pages/Dashboard/ManageMedicines';
+import ManageUsers from '../Pages/Dashboard/ManageUsers';
 
 
 
@@ -78,6 +79,10 @@ const Router = createBrowserRouter([
       {
         path: "manage-medicines",
         element: <ManageMedicines></ManageMedicines>
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers></ManageUsers>
       }
     ]
   }
