@@ -13,6 +13,7 @@ import Cart from '../Pages/Cart';
 import UpdateProfile from '../Pages/Dropdown/UpdateProfile';
 import Dashboard from '../Layouts/Dashboard';
 import ManageCategory from '../Pages/Dashboard/ManageCategory';
+import ManageMedicines from '../Pages/Dashboard/ManageMedicines';
 
 
 
@@ -73,6 +74,10 @@ const Router = createBrowserRouter([
       {
         path: "manage-category",
         element: <ManageCategory></ManageCategory>
+      },
+      {
+        path: "manage-medicines",
+        element: <ManageMedicines></ManageMedicines>
       }
     ]
   }

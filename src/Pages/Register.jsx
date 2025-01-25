@@ -6,14 +6,15 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '../Provider/AuthProvider';
 import { Helmet } from 'react-helmet';
+import axios from 'axios';
 
 const Register = () => {
   const { CreateNewUser, setUser, updateUserProfile, handleGoogleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // State for toggling password visibility
   const [showPassword, setShowPassword] = useState(false);
 
+  // Password validation function
   const validatePassword = (password) => {
     const upperCaseRegex = /[A-Z]/;
     const lowerCaseRegex = /[a-z]/;
@@ -32,6 +33,7 @@ const Register = () => {
     return null;
   };
 
+  // Handle manual registration
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
@@ -51,11 +53,26 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
 
+        // Update user profile
         updateUserProfile({ displayName: name, photoURL: photo })
           .then(() => {
-            setUser({ ...user, displayName: name, photoURL: photo, role: role });
-            toast.success("Registration successful!");
-            navigate('/');
+            const userData = {
+              name,
+              email,
+              photoURL: photo,
+              role,
+            };
+
+            // Send data to backend using Axios
+            axios.post('http://localhost:5000/users', userData)
+              .then(() => {
+                setUser({ ...user, displayName: name, photoURL: photo, role });
+                toast.success("Registration successful!");
+                navigate('/');
+              })
+              .catch((error) => {
+                toast.error(`Error saving user data: ${error.response?.data?.error || error.message}`);
+              });
           })
           .catch((error) => {
             toast.error(`Error updating profile: ${error.message}`);
@@ -66,12 +83,29 @@ const Register = () => {
       });
   };
 
+  // Handle Google Login
   const handleGoogleLoginClick = () => {
     handleGoogleLogin()
       .then((res) => {
-        const locationState = location.state?.from || '/';
-        toast.success("Logged in successfully with Google!");
-        navigate(locationState);
+        const user = res.user;
+
+        const userData = {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          role: 'user',
+        };
+
+        // Send data to backend using Axios
+        axios.post('/users', userData)
+          .then(() => {
+            setUser(user);
+            toast.success("Logged in successfully with Google!");
+            navigate('/');
+          })
+          .catch((error) => {
+            toast.error(`Error saving user data: ${error.response?.data?.error || error.message}`);
+          });
       })
       .catch((error) => {
         toast.error(`Error with Google login: ${error.message}`);
@@ -152,4 +186,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Register;

@@ -30,7 +30,7 @@ const Navbar = () => {
         >
             Shop
         </NavLink>
-        <NavLink
+        {/* <NavLink
             className={({ isActive }) =>
                 `font-bold text-base leading-none ${isActive
                     ? "text-amber-300 border-b-2 border-amber-300"
@@ -40,7 +40,7 @@ const Navbar = () => {
             to="/categoryDetails"
         >
             Category Details
-        </NavLink>
+        </NavLink> */}
         <NavLink className={({ isActive }) =>
             `font-bold text-base leading-none ${isActive
                 ? "text-amber-300 border-b-2 border-amber-300"

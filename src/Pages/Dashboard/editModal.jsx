@@ -49,13 +49,13 @@ const EditModal = ({ setShowEditModal, editCategory, queryClient }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
       <div className="modal modal-open w-full max-w-md bg-white p-8 rounded-lg shadow-xl">
-        <h3 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+        <h3 className="text-2xl font-semibold text-center text-white mb-3">
           Edit Category
         </h3>
 
         {/* Category Name Input */}
         <div className="mb-4">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-600">
+          <label htmlFor="category" className="block text-sm font-medium text-white">
             Category Name
           </label>
           <input
@@ -71,7 +71,7 @@ const EditModal = ({ setShowEditModal, editCategory, queryClient }) => {
 
         {/* Image URL Input */}
         <div className="mb-6">
-          <label htmlFor="image" className="block text-sm font-medium text-gray-600">
+          <label htmlFor="image" className="block text-sm font-medium text-white">
             Image URL
           </label>
           <input

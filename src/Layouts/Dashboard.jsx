@@ -14,6 +14,11 @@ const Dashboard = () => {
                             <FaHome></FaHome>
                             manage Category</NavLink>
                     </li>
+                    <li>
+                        <NavLink to="manage-medicines">
+                            <FaHome></FaHome>
+                            manage medicines</NavLink>
+                    </li>
                     </div>
                     {/* shared nav links */}
                     <div className="divider"></div>
