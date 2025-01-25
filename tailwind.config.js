@@ -5,10 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'custom-blue': 'rgba(128, 191, 191)',
+        'custom-hsl': 'hsl(180, 20%, 50%)',
+      },
+    },
   },
   plugins: [
-    require('daisyui'),
+    require('daisyui'), // DaisyUI for UI components
   ],
 }
-

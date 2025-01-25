@@ -15,6 +15,9 @@ import Dashboard from '../Layouts/Dashboard';
 import ManageCategory from '../Pages/Dashboard/ManageCategory';
 import ManageMedicines from '../Pages/Dashboard/ManageMedicines';
 import ManageUsers from '../Pages/Dashboard/ManageUsers';
+import Payments from '../Pages/Dashboard/Payment/Payments';
+import InvoicePage from '../Pages/Invoice';
+import SalesReport from '../Pages/Dashboard/SalesReport';
 
 
 
@@ -30,6 +33,10 @@ const Router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop></Shop>
+      },
+      {
+        path: "/invoice",
+        element: <InvoicePage></InvoicePage>
       },
       {
         path: "/categoryDetails/:category",
@@ -83,6 +90,14 @@ const Router = createBrowserRouter([
       {
         path: "manage-users",
         element: <ManageUsers></ManageUsers>
+      },
+      {
+        path: "sales-report",
+        element: <SalesReport></SalesReport>
+      },
+      {
+        path: "payment",
+        element: <Payments></Payments>
       }
     ]
   }

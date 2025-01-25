@@ -24,6 +24,16 @@ const Dashboard = () => {
                             <FaHome></FaHome>
                             manage users</NavLink>
                     </li>
+                    <li>
+                        <NavLink to="payment">
+                            <FaHome></FaHome>
+                            payment</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="sales-report">
+                            <FaHome></FaHome>
+                            sales reports</NavLink>
+                    </li>
                     </div>
                     {/* shared nav links */}
                     <div className="divider"></div>

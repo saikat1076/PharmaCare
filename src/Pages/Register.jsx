@@ -97,7 +97,7 @@ const Register = () => {
         };
 
         // Send data to backend using Axios
-        axios.post('/users', userData)
+        axios.post('http://localhost:5000/users', userData)
           .then(() => {
             setUser(user);
             toast.success("Logged in successfully with Google!");
