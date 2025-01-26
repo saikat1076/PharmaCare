@@ -24,6 +24,7 @@ import SellerAdvertisement from '../Pages/Dashboard/SellerAdvertisement';
 import ManageAdvertisements from '../Pages/Dashboard/ManageAdvertisements';
 import AdminHome from '../Pages/Dashboard/adminHome';
 import SellerHome from '../Pages/Dashboard/SellerHome';
+import JoinUs from '../Components/JoinUs';
 
 
 
@@ -39,6 +40,10 @@ const Router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop></Shop>
+      },
+      {
+        path: "/join-us",
+        element: <JoinUs></JoinUs>
       },
       {
         path: "/invoice",

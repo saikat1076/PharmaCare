@@ -31,17 +31,17 @@ const Navbar = () => {
         >
             Shop
         </NavLink>
-        {/* <NavLink
-            className={({ isActive }) =>
+        {
+            user && user?.email ? <></> :  <NavLink className={({ isActive }) =>
                 `font-bold text-base leading-none ${isActive
                     ? "text-amber-300 border-b-2 border-amber-300"
                     : "text-white"
-                }`
+                }` 
             }
-            to="/categoryDetails"
-        >
-            Category Details
-        </NavLink> */}
+                to="/join-us">
+                Join Us
+            </NavLink>
+        }
         <NavLink className={({ isActive }) =>
             `font-bold text-base leading-none ${isActive
                 ? "text-amber-300 border-b-2 border-amber-300"
