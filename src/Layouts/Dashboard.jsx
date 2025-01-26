@@ -35,6 +35,11 @@ const Dashboard = () => {
                             sales reports</NavLink>
                     </li>
                     <li>
+                        <NavLink to="seller-report">
+                            <FaHome></FaHome>
+                            seller reports</NavLink>
+                    </li>
+                    <li>
                         <NavLink to="payment-history">
                             <FaHome></FaHome>
                             payment History</NavLink>

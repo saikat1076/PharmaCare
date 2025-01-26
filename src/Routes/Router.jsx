@@ -19,6 +19,7 @@ import Payments from '../Pages/Dashboard/Payment/Payments';
 import PaymentHistory from '../Pages/Dashboard/PaymentHistory';
 import InvoicePage from '../Pages/Invoice';
 import SalesReport from '../Pages/Dashboard/SalesReport';
+import SellerReport from '../Pages/Dashboard/SellerReport';
 
 
 
@@ -95,6 +96,10 @@ const Router = createBrowserRouter([
       {
         path: "sales-report",
         element: <SalesReport></SalesReport>
+      },
+      {
+        path: "seller-report",
+        element: <SellerReport></SellerReport>
       },
       {
         path: "payment",
