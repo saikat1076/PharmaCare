@@ -10,6 +10,11 @@ const Dashboard = () => {
                 <ul className="menu p-4">
                     <div>
                     <li>
+                        <NavLink to="admin-home">
+                            <FaHome></FaHome>
+                            AdminHome</NavLink>
+                    </li>
+                    <li>
                         <NavLink to="manage-category">
                             <FaHome></FaHome>
                             manage Category</NavLink>

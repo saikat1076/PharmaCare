@@ -1,21 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { saveAs } from 'file-saver'; // For Excel file download
+import jsPDF from 'jspdf'; // For PDF download
+import 'jspdf-autotable'; // Required for auto-table plugin in jsPDF
+import * as XLSX from 'xlsx'; // For Excel download
 
 const SellerReport = () => {
   const [cartData, setCartData] = useState([]);
   const [paymentData, setPaymentData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [activeStatus, setActiveStatus] = useState("Pending"); // Add activeStatus state
-  const { user, isLoading } = useContext(AuthContext); // Get the logged-in user's email and loading state
+  const [activeStatus, setActiveStatus] = useState("Pending");
+  const [startDate, setStartDate] = useState(""); // Date range start
+  const [endDate, setEndDate] = useState(""); // Date range end
+  const { user, isLoading } = useContext(AuthContext);
 
-  // Ensure the user is loaded before fetching data
   useEffect(() => {
-    if (isLoading || !user) {
-      return; // Don't fetch data if the user is not available
-    }
-
+    if (isLoading || !user) return;
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -23,37 +25,54 @@ const SellerReport = () => {
           fetch("http://localhost:5000/carts").then((res) => res.json()),
           fetch("http://localhost:5000/payments").then((res) => res.json()),
         ]);
-
-        // Filter cart data where sellerEmail matches user.email
         const userCarts = cartsRes.filter((cart) => cart.sellerEmail === user.email);
+        const userPayments = paymentsRes.filter((payment) => payment.SellerEmail.includes(user.email));
 
-        // Filter payment data where SellerEmail matches user.email
-        const userPayments = paymentsRes.filter((payment) =>
-          payment.SellerEmail.includes(user.email)
-        );
-
-        setCartData(userCarts); // Save cart data
-        setPaymentData(userPayments); // Save payment data
-
-        setFilteredData(userCarts); // Default to show pending (cart) data
+        setCartData(userCarts);
+        setPaymentData(userPayments);
+        setFilteredData(userCarts);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchData();
-  }, [user, isLoading]); // Re-run effect when user changes or isLoading state changes
+  }, [user, isLoading]);
 
-  // Handle button clicks to filter data
   const handleFilter = (status) => {
-    setActiveStatus(status); // Set active button status
+    setActiveStatus(status);
     if (status === "Pending") {
-      setFilteredData(cartData); // Show cart data
+      setFilteredData(cartData);
     } else if (status === "Paid") {
-      setFilteredData(paymentData); // Show payment data
+      setFilteredData(paymentData);
     }
+  };
+
+  const handleDateFilter = () => {
+    let filtered = filteredData;
+    if (startDate) {
+      filtered = filtered.filter((data) => new Date(data.date) >= new Date(startDate));
+    }
+    if (endDate) {
+      filtered = filtered.filter((data) => new Date(data.date) <= new Date(endDate));
+    }
+    setFilteredData(filtered);
+  };
+
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(filteredData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sales Report");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const excelFile = new Blob([excelBuffer], { bookType: "xlsx", type: "application/octet-stream" });
+    saveAs(excelFile, "sales_report.xlsx");
+  };
+
+  const exportToPdf = () => {
+    const doc = new jsPDF();
+    doc.autoTable({ html: "#data-table" });
+    doc.save("sales_report.pdf");
   };
 
   const columns = [
@@ -61,12 +80,11 @@ const SellerReport = () => {
     { name: "Seller Email", selector: (row) => row.sellerEmail || row.SellerEmail || "N/A" },
     { name: "Buyer Email", selector: (row) => row.email || "N/A" },
     { name: "Total Price", selector: (row) => row.perUnitPrice || "N/A" },
-    { name: "Transaction ID", selector: (row) => row.transactionId || "N/A" }, // Available only for payments
-    { name: "Date", selector: (row) => row.date || "N/A" }, // Available only for payments
+    { name: "Transaction ID", selector: (row) => row.transactionId || "N/A" },
+    { name: "Date", selector: (row) => row.date || "N/A" },
     { name: "Status", selector: (row) => row.status || "N/A" },
   ];
 
-  // If user is not yet loaded, show a loading message
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -75,8 +93,31 @@ const SellerReport = () => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">Sales Report</h1>
 
-      {/* Filter Buttons */}
+      {/* Date Range Filter */}
       <div className="flex justify-center gap-4 mb-4">
+        <input
+          type="date"
+          className="px-4 py-2 rounded"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <input
+          type="date"
+          className="px-4 py-2 rounded"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+          onClick={handleDateFilter}
+        >
+          Filter by Date
+        </button>
+      </div>
+
+      {/* Status Toggle Tile */}
+      <div className="flex space-x-4 gap-4 mb-4">
+      <div className="flex justify-center gap-4 pr-16">
         <button
           className={`px-4 py-2 rounded ${activeStatus === "Pending" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
           onClick={() => handleFilter("Pending")}
@@ -88,6 +129,22 @@ const SellerReport = () => {
           onClick={() => handleFilter("Paid")}
         >
           Paid
+        </button>
+      </div>
+        <h2 className="text-xl font-bold text-blue-600">Toggle button to see pending and paid information</h2>
+         {/* Filter Buttons */}
+      
+      </div>
+
+     
+
+      {/* Export Buttons */}
+      <div className="flex justify-center gap-4 mb-4">
+        <button onClick={exportToExcel} className="px-4 py-2 bg-yellow-500 text-white rounded">
+          Export to Excel
+        </button>
+        <button onClick={exportToPdf} className="px-4 py-2 bg-red-500 text-white rounded">
+          Export to PDF
         </button>
       </div>
 
@@ -103,4 +160,4 @@ const SellerReport = () => {
   );
 };
 
-export default SellerReport;
+export default SellerReport;

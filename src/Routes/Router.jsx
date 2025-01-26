@@ -22,6 +22,7 @@ import SalesReport from '../Pages/Dashboard/SalesReport';
 import SellerReport from '../Pages/Dashboard/SellerReport';
 import SellerAdvertisement from '../Pages/Dashboard/SellerAdvertisement';
 import ManageAdvertisements from '../Pages/Dashboard/ManageAdvertisements';
+import AdminHome from '../Pages/Dashboard/adminHome';
 
 
 
@@ -83,6 +84,10 @@ const Router = createBrowserRouter([
     element: <Dashboard></Dashboard>,
     children: [
 
+      {
+        path: "admin-home",
+        element: <AdminHome></AdminHome>
+      },
       {
         path: "manage-category",
         element: <ManageCategory></ManageCategory>
