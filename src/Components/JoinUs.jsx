@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 
 const JoinUs = () => {
@@ -16,7 +17,14 @@ const JoinUs = () => {
   };
 
   return (
-    <div className="py-12 bg-gray-100">
+   <>
+   <Helmet>
+                <meta charSet="utf-8" />
+                <title>PharmaCare | JoinUs</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
+   
+   <div className="py-12 bg-gray-100">
       <div className="container mx-auto px-4">
         {/* Heading */}
         <h2 className="text-3xl font-semibold text-center text-blue-700 mb-8">Join Us at PharmaCare</h2>
@@ -108,7 +116,7 @@ const JoinUs = () => {
           </form>
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 

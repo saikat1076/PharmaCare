@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '../Provider/AuthProvider';
+import axios from 'axios';
 
 const Login = () => {
     // Access AuthContext values
@@ -34,14 +35,33 @@ const Login = () => {
     };
 
     // Handle Google login
-    const handleGoogle = async () => {
-        try {
-            await handleGoogleLogin();
-            navigate(location?.state?.from || "/");
-        } catch (error) {
-            toast.error("Google login failed. Please try again.", { position: "top-center" });
-        }
-    };
+    const handleGoogleLoginClick = () => {
+        handleGoogleLogin()
+          .then((res) => {
+            const user = res.user;
+    
+            const userData = {
+              name: user.displayName,
+              email: user.email,
+              photoURL: user.photoURL,
+              role: 'user',
+            };
+    
+            // Send data to backend using Axios
+            axios.post('https://pharma-care-server-delta.vercel.app/users', userData)
+              .then(() => {
+                setUser(user);
+                toast.success("Logged in successfully with Google!");
+                navigate('/');
+              })
+              .catch((error) => {
+                toast.error(`Error saving user data: ${error.response?.data?.error || error.message}`);
+              });
+          })
+          .catch((error) => {
+            toast.error(`Error with Google login: ${error.message}`);
+          });
+      };
 
     return (
         <div className='min-h-screen flex justify-center items-center'>
@@ -80,13 +100,9 @@ const Login = () => {
                         <button className="btn btn-primary">Login</button>
                     </div>
                     <div className="divider">OR</div>
-                    <button
-                        type="button"
-                        onClick={handleGoogle}
-                        className='btn bg-black text-white text-xl flex items-center gap-2'
-                    >
-                        <FcGoogle /> Google Login
-                    </button>
+                    <button onClick={handleGoogleLoginClick} className="btn bg-black text-white text-xl flex items-center gap-2">
+              <FcGoogle /> Google Login
+            </button>
                 </form>
                 <p className='text-center font-semibold mb-5'>
                     Don't have an account? <Link to='/auth/register' className='text-blue-500'>Register</Link>

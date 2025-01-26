@@ -8,6 +8,7 @@ import { FcAdvertising } from 'react-icons/fc';
 import { TbReportMoney } from "react-icons/tb";
 import { MdOutlinePayment } from "react-icons/md";
 import { FiShoppingCart } from "react-icons/fi";
+import { Helmet } from 'react-helmet';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);  // Get the user from AuthContext
@@ -44,6 +45,12 @@ const Dashboard = () => {
     }
 
     return (
+        <>
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>PharmaCare | Dashboard</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
         <div className="flex container">
             {/* Dashboard Sidebar */}
             <div className="w-40 min-h-screen bg-orange-400">
@@ -149,7 +156,7 @@ const Dashboard = () => {
                 <Navigate to={defaultSection} />
                 <Outlet />
             </div>
-        </div>
+        </div></>
     );
 };
 

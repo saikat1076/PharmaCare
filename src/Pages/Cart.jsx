@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAxiosPublic from "../Hooks/UseAxiosPublic";
 import useCart from "../Hooks/useCart";
+import { Helmet } from "react-helmet";
 
 
 
@@ -40,6 +41,12 @@ const Cart = () => {
     }
 
     return (
+        <>
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>PharmaCare | Cart</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
         <div>
             <div className="flex justify-evenly mb-8 lg:pt-16">
                 <h2 className="text-4xl">Items: {cart.length}</h2>
@@ -99,6 +106,7 @@ const Cart = () => {
                 </table>
             </div>
         </div>
+        </>
     );
 };
 
