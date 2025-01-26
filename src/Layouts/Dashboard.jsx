@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaEnvelope, FaHome, FaSearch } from 'react-icons/fa';
+import { FaEnvelope, FaHome, FaSearch, FaUser } from 'react-icons/fa';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -21,8 +21,13 @@ const Dashboard = () => {
                     </li>
                     <li>
                         <NavLink to="manage-users">
-                            <FaHome></FaHome>
+                            <FaUser></FaUser>
                             manage users</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="manage-advertisements">
+                            <FaUser></FaUser>
+                            manage advertisement</NavLink>
                     </li>
                     <li>
                         <NavLink to="payment">
@@ -38,6 +43,11 @@ const Dashboard = () => {
                         <NavLink to="seller-report">
                             <FaHome></FaHome>
                             seller reports</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="seller-advertisement">
+                            <FaHome></FaHome>
+                            seller ADVERTISEMENT</NavLink>
                     </li>
                     <li>
                         <NavLink to="payment-history">

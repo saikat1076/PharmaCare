@@ -20,6 +20,8 @@ import PaymentHistory from '../Pages/Dashboard/PaymentHistory';
 import InvoicePage from '../Pages/Invoice';
 import SalesReport from '../Pages/Dashboard/SalesReport';
 import SellerReport from '../Pages/Dashboard/SellerReport';
+import SellerAdvertisement from '../Pages/Dashboard/SellerAdvertisement';
+import ManageAdvertisements from '../Pages/Dashboard/ManageAdvertisements';
 
 
 
@@ -94,12 +96,20 @@ const Router = createBrowserRouter([
         element: <ManageUsers></ManageUsers>
       },
       {
+        path: "manage-advertisements",
+        element: <ManageAdvertisements></ManageAdvertisements>
+      },
+      {
         path: "sales-report",
         element: <SalesReport></SalesReport>
       },
       {
         path: "seller-report",
         element: <SellerReport></SellerReport>
+      },
+      {
+        path: "seller-advertisement",
+        element: <SellerAdvertisement></SellerAdvertisement>
       },
       {
         path: "payment",

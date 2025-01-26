@@ -117,13 +117,13 @@ const CheckoutForm = () => {
                     style: {
                         base: {
                             fontSize: '16px',
-                            color: '#424770',
+                            color: 'black',
                             '::placeholder': {
-                                color: '#aab7c4',
+                                color: 'black',
                             },
                         },
                         invalid: {
-                            color: '#9e2146',
+                            color: 'black',
                         },
                     },
                 }}
