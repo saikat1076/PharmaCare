@@ -7,13 +7,15 @@ import useAxiosPublic from "../Hooks/UseAxiosPublic";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useCart from "../Hooks/useCart";
 
 const CategoryDetails = () => {
   const { category } = useParams();  // Get the category name from the URL
   const [medicines, setMedicines] = useState([]);
   const {user} = useContext(AuthContext)
   const [selectedMedicine, setSelectedMedicine] = useState(null); 
-  const axiosPublic = useAxiosPublic(); // Track selected medicine for modal
+  const axiosPublic = useAxiosPublic();
+  const [, refetch] = useCart(); // Track selected medicine for modal
 
   // Fetch medicines based on the selected category
   const fetchMedicines = async () => {
