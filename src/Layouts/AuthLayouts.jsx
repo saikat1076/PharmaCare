@@ -5,7 +5,7 @@ import Navbar from '../Components/Navbar';
 
 const AuthLayouts = () => {
     return (
-        <div className='lg:px-10'>
+        <div>
            <Navbar></Navbar>
             <Outlet></Outlet>
         </div>

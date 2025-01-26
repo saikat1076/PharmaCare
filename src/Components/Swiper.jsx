@@ -30,7 +30,7 @@ const CustomSwiper = () => {
   }, []);
 
   return (
-    <div>
+    <div className="relative">
       {/* Main Swiper for large images */}
       <SwiperComponent
         style={{
@@ -47,40 +47,41 @@ const CustomSwiper = () => {
       >
         {advertisements.map((ad) => (
           <SwiperSlide key={ad._id}>
-            <div className="flex justify-between">
+            <div className="relative">
               <img
                 src={ad.imageUrl}
                 alt={ad.description}
-                className="w-1/2 h-[500px] object-cover"
+                className="w-full h-[400px] object-cover rounded-lg shadow-md"
               />
-              <div className="w-1/2 py-10 bg-white">
-                <p className="text-9xl font-bold">{ad.description}</p>
-              </div>
+              {/* <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent text-white p-4">
+                <p className="text-lg font-semibold">{ad.description}</p>
+                <p className="mt-2 text-sm">{`Status: ${ad.status}`}</p>
+              </div> */}
             </div>
           </SwiperSlide>
         ))}
       </SwiperComponent>
       
       {/* Thumbnails Swiper for small image previews */}
-      {/* <SwiperComponent
+      <SwiperComponent
         onSwiper={setThumbsSwiper}  // Update the thumbsSwiper when Swiper is initialized
         spaceBetween={10}
         slidesPerView={5}
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Thumbs]}
-        className="mySwiper"
+        className="mySwiper mt-4"
       >
         {advertisements.map((ad) => (
           <SwiperSlide key={ad._id}>
             <img
               src={ad.imageUrl}
               alt={ad.description}
-              className="w-[400px] h-[80px] object-cover rounded-lg"
+              className="w-full h-[80px] object-cover rounded-lg cursor-pointer"
             />
           </SwiperSlide>
         ))}
-      </SwiperComponent> */}
+      </SwiperComponent>
     </div>
   );
 };

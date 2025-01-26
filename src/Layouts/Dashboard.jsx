@@ -40,6 +40,11 @@ const Dashboard = () => {
                             payment</NavLink>
                     </li>
                     <li>
+                        <NavLink to="seller-home">
+                            <FaHome></FaHome>
+                            SellerHome</NavLink>
+                    </li>
+                    <li>
                         <NavLink to="sales-report">
                             <FaHome></FaHome>
                             sales reports</NavLink>
