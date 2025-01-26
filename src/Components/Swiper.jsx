@@ -51,7 +51,7 @@ const CustomSwiper = () => {
               <img
                 src={ad.imageUrl}
                 alt={ad.description}
-                className="w-full h-[400px] object-cover rounded-lg shadow-md"
+                className="w-full h-[420px] object-cover rounded-lg shadow-md"
               />
               {/* <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent text-white p-4">
                 <p className="text-lg font-semibold">{ad.description}</p>

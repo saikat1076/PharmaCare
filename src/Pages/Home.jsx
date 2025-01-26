@@ -3,6 +3,7 @@ import Swiper from '../Components/Swiper';
 import MedicineMarquee from '../Components/Marquee/MedicineMarquee';
 import CategoryCard from '../Components/Category/CategoryCard';
 import DiscountedMedicines from '../Components/Discount.jsx/DiscountedMedicines';
+import ContactUsSection from '../Components/ContactUsSection';
 
 const Home = () => {
     return (
@@ -11,6 +12,7 @@ const Home = () => {
            <CategoryCard></CategoryCard>
            <DiscountedMedicines></DiscountedMedicines>
            <MedicineMarquee></MedicineMarquee>
+           <ContactUsSection></ContactUsSection>
         </div>
         
     );

@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";  // Import useParams to get the dynamic category name from the URL
 import Title from "../Components/Shared/Title";
 import { Modal } from "../Components/Shared/Modal";
 import { AiOutlineEye, AiOutlineShoppingCart } from 'react-icons/ai';   // Modal for displaying medicine details
 import useAxiosPublic from "../Hooks/UseAxiosPublic";
+import { AuthContext } from "../Provider/AuthProvider";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const CategoryDetails = () => {
   const { category } = useParams();  // Get the category name from the URL
   const [medicines, setMedicines] = useState([]);
+  const {user} = useContext(AuthContext)
   const [selectedMedicine, setSelectedMedicine] = useState(null); 
   const axiosPublic = useAxiosPublic(); // Track selected medicine for modal
 
@@ -31,9 +35,52 @@ const CategoryDetails = () => {
   };
 
   // Handle select button click (add medicine to cart)
-  const handleSelectClick = (medicine) => {
-    console.log(`${medicine.itemName} added to cart`);
-    // Add the medicine to the cart (you can extend this functionality)
+  const handleCartClick = (medicine) => {
+    if (user && user.email) {
+      const cartItem = {
+        medicineId: medicine._id,
+        email: user.email,
+        itemName: medicine.itemName,
+        genericName: medicine.genericName,
+        shortDescription: medicine.shortDescription,
+        image: medicine.image,
+        category: medicine.category,
+        company: medicine.company,
+        itemMassUnit: medicine.itemMassUnit,
+        perUnitPrice: medicine.perUnitPrice,
+        discountPercentage: medicine.discountPercentage,
+        sellerEmail: medicine.sellerEmail,
+      };
+
+      axios.post('http://localhost:5000/carts', cartItem)
+        .then(res => {
+          console.log(res.data)
+          if (res.data.insertedId) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: `${medicine.itemName} added to your cart`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+            refetch();
+          }
+        });
+    } else {
+      Swal.fire({
+        title: "You are not Logged In",
+        text: "Please login to add to the cart?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, login!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/auth/login');
+        }
+      });
+    }
   };
 
   return (
@@ -73,11 +120,11 @@ const CategoryDetails = () => {
      
                        {/* Cart button */}
                        <button
-                         className="text-green-500 hover:text-green-700"
-                         onClick={() => handleCartClick(medicine)}
-                       >
-                         <AiOutlineShoppingCart size={24} />
-                       </button>
+                    className="text-green-500 hover:text-green-700"
+                    onClick={() => handleCartClick(medicine)}
+                  >
+                    <AiOutlineShoppingCart size={24} />
+                  </button>
                      </td>
                    </tr>
                  ))}
