@@ -3,11 +3,11 @@
 Welcome to **PharmaCare**, your one-stop online store for pharmaceutical products and healthcare needs.
 
 ## Admin Credentials
-- **Admin Username**: `admin@pharmacare.com`
-- **Admin Password**: `admin123`
+- **Admin Username**: `chakrabortymoni335@gmail.com`
+- **Admin Password**: `12345saI`
 
 ## Live Site URL
-- **Live Site**: [https://www.pharmacare.com](https://www.pharmacare.com)
+- **Live Site**: [https://pharmacare-6fd71.web.app/](https://pharmacare-6fd71.web.app/)
 
 ---
 
@@ -32,47 +32,7 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/pharmacare.git
-2. 
-Sure! Here's a sample README.md file that you can use for your project in VSCode. You can replace the placeholders with actual information for your site.
-
-markdown
-Copy
-# PharmaCare
-
-Welcome to **PharmaCare**, your one-stop online store for pharmaceutical products and healthcare needs.
-
-## Admin Credentials
-- **Admin Username**: `admin@pharmacare.com`
-- **Admin Password**: `admin123`
-
-## Live Site URL
-- **Live Site**: [https://www.pharmacare.com](https://www.pharmacare.com)
-
----
-
-## Features of PharmaCare
-
-Here are some key features of our website:
-
-- **User Authentication**: Users can sign up, log in, and update their profiles.
-- **Product Store**: Browse and purchase healthcare and pharmaceutical products.
-- **Shopping Cart**: Add products to the cart and proceed with secure checkout.
-- **Responsive Design**: Optimized for all screen sizes, from desktops to mobile devices.
-- **Language Support**: Switch between multiple languages (English, Spanish, etc.).
-- **Admin Dashboard**: Admins can manage users, products, and view analytics.
-- **Order Management**: Track orders and manage order statuses from the admin panel.
-- **Search Functionality**: Easily find products by name, category, or price range.
-- **Secure Payment Gateway**: Integrate with secure payment options to complete purchases.
-- **Product Reviews & Ratings**: Users can leave reviews and rate products they have purchased.
-
-## Setup & Installation
-
-To set up the project locally, follow these steps:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/pharmacare.git
+   git clone https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-saikat1076
 2. Navigate to the project directory:
 ```bash
     cd pharmacare

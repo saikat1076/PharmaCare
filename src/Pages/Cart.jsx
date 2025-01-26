@@ -41,7 +41,7 @@ const Cart = () => {
 
     return (
         <div>
-            <div className="flex justify-evenly mb-8 lg:pt-12">
+            <div className="flex justify-evenly mb-8 lg:pt-16">
                 <h2 className="text-4xl">Items: {cart.length}</h2>
                 <h2 className="text-4xl">Total perUnitPrice: {totalPerUnitPrice}</h2>
                 {cart.length ? <Link to="/dashboard/payment">
@@ -52,7 +52,7 @@ const Cart = () => {
 
             </div>
             <div className="overflow-x-auto">
-                <table className="table  w-full">
+                <table className="table w-full">
                     {/* head */}
                     <thead>
                         <tr>

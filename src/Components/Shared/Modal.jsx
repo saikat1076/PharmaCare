@@ -42,16 +42,6 @@ const Modal = ({ medicine, onClose }) => {
           <p><strong className="text-gray-800">Price:</strong> <span className="text-red-500 font-semibold">${medicine.perUnitPrice}</span></p>
           <p><strong className="text-gray-800">Seller Email:</strong> {medicine.sellerEmail}</p>
         </div>
-
-        {/* Action Buttons */}
-        <div className="mt-6 flex justify-center space-x-4">
-          <button className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-200">
-            Add to Cart
-          </button>
-          <button className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition duration-200">
-            View More
-          </button>
-        </div>
       </div>
     </motion.div>
   );

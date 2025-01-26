@@ -25,6 +25,7 @@ import ManageAdvertisements from '../Pages/Dashboard/ManageAdvertisements';
 import AdminHome from '../Pages/Dashboard/adminHome';
 import SellerHome from '../Pages/Dashboard/SellerHome';
 import JoinUs from '../Components/JoinUs';
+import PrivateRoutes from './PrivateRoutes';
 
 
 
@@ -60,7 +61,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <Cart></Cart>
+        element: <PrivateRoutes><Cart></Cart></PrivateRoutes>
       },
       {
         path: "/update-profile",
