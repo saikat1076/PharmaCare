@@ -17,7 +17,7 @@ const CustomSwiper = () => {
 
   useEffect(() => {
     // Fetch advertisements data from the API
-    fetch('http://localhost:5000/advertisement')
+    fetch('https://pharma-care-server-delta.vercel.app/advertisement')
       .then((res) => res.json())
       .then((data) => {
         // Filter advertisements with status "Approved"

@@ -9,7 +9,7 @@ const ManageUsers = () => {
 
   useEffect(() => {
     // Fetch all users
-    axios.get('http://localhost:5000/users')
+    axios.get('https://pharma-care-server-delta.vercel.app/users')
       .then((response) => {
         setUsers(response.data);
         setLoading(false);
@@ -33,7 +33,7 @@ const ManageUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // If confirmed, proceed with the role change
-        axios.put(`http://localhost:5000/users/${userId}`, { role: newRole })
+        axios.put(`https://pharma-care-server-delta.vercel.app/users/${userId}`, { role: newRole })
           .then((response) => {
             toast.success(`User role updated to ${newRole}`);
             setUsers(users.map((user) =>

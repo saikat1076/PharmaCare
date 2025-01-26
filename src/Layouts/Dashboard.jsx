@@ -18,7 +18,7 @@ const Dashboard = () => {
         const fetchRole = async () => {
             if (user && user.email) {
                 try {
-                    const response = await fetch(`http://localhost:5000/users/role?email=${user.email}`);
+                    const response = await fetch(`https://pharma-care-server-delta.vercel.app/users/role?email=${user.email}`);
                     const data = await response.json();
                     setRole(data.role); // Store the role once fetched
                 } catch (error) {

@@ -13,7 +13,7 @@ const CategoryCard = () => {
   // Fetch categories from MongoDB using Axios
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/category");
+      const response = await axios.get("https://pharma-care-server-delta.vercel.app/category");
       setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);

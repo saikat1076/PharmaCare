@@ -14,7 +14,7 @@ const PostAdvertisement = () => {
   // Fetch advertisements from the server
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/advertisement/email?email=${user.email}`)
+      .get(`https://pharma-care-server-delta.vercel.app/advertisement/email?email=${user.email}`)
       .then((response) => {
         setAdvertisements(response.data);
       })
@@ -44,7 +44,7 @@ const PostAdvertisement = () => {
     };
 
     axios
-      .post("http://localhost:5000/advertisement", data)
+      .post("https://pharma-care-server-delta.vercel.app/advertisement", data)
       .then((response) => {
         Swal.fire({
           title: "Success!",
@@ -57,7 +57,7 @@ const PostAdvertisement = () => {
 
         // Fetch updated advertisements after posting
         axios
-          .get(`http://localhost:5000/advertisement/email?email=${user.email}`)
+          .get(`https://pharma-care-server-delta.vercel.app/advertisement/email?email=${user.email}`)
           .then((response) => {
             setAdvertisements(response.data);
           })

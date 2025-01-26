@@ -8,7 +8,7 @@ import EditModal from './editModal'; // Importing edit modal component
 
 // Fetch categories from API
 const fetchCategory = async () => {
-  const response = await axios.get('http://localhost:5000/category');
+  const response = await axios.get('https://pharma-care-server-delta.vercel.app/category');
   return response.data;
 };
 
@@ -28,7 +28,7 @@ const ManageCategory = () => {
 
   // Delete mutation
   const deleteCategory = async (id) => {
-    await axios.delete(`http://localhost:5000/category/${id}`);
+    await axios.delete(`https://pharma-care-server-delta.vercel.app/category/${id}`);
   };
 
   const deleteMutation = useMutation({
@@ -56,7 +56,7 @@ const ManageCategory = () => {
   // Mutation to add a new category
   const addCategoryMutation = useMutation({
     mutationFn: async (newCategory) => {
-      const response = await axios.post('http://localhost:5000/category', newCategory);
+      const response = await axios.post('https://pharma-care-server-delta.vercel.app/category', newCategory);
       return response.data;
     },
     onSuccess: () => {

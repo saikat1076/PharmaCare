@@ -22,8 +22,8 @@ const SellerReport = () => {
       setLoading(true);
       try {
         const [cartsRes, paymentsRes] = await Promise.all([
-          fetch("http://localhost:5000/carts").then((res) => res.json()),
-          fetch("http://localhost:5000/payments").then((res) => res.json()),
+          fetch("https://pharma-care-server-delta.vercel.app/carts").then((res) => res.json()),
+          fetch("https://pharma-care-server-delta.vercel.app/payments").then((res) => res.json()),
         ]);
         const userCarts = cartsRes.filter((cart) => cart.sellerEmail === user.email);
         const userPayments = paymentsRes.filter((payment) => payment.SellerEmail.includes(user.email));

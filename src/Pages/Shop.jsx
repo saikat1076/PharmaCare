@@ -54,7 +54,7 @@ const Shop = () => {
         sellerEmail: medicine.sellerEmail,
       };
 
-      axios.post('http://localhost:5000/carts', cartItem)
+      axios.post('https://pharma-care-server-delta.vercel.app/carts', cartItem)
         .then(res => {
           console.log(res.data)
           if (res.data.insertedId) {
@@ -154,7 +154,7 @@ const Shop = () => {
       </div>
 
       {/* Table for larger screens */}
-      <div className="hidden lg:block">
+      <div className="lg:block">
         <table className="table-auto w-full border-collapse text-sm shadow-md rounded-lg">
           <thead className="bg-gray-100">
             <tr>

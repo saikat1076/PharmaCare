@@ -52,7 +52,7 @@ const CategoryDetails = () => {
         sellerEmail: medicine.sellerEmail,
       };
 
-      axios.post('http://localhost:5000/carts', cartItem)
+      axios.post('https://pharma-care-server-delta.vercel.app/carts', cartItem)
         .then(res => {
           console.log(res.data)
           if (res.data.insertedId) {

@@ -18,8 +18,8 @@ const SalesReport = () => {
       try {
         // Fetch cart and payment data
         const [cartsRes, paymentsRes] = await Promise.all([
-          fetch("http://localhost:5000/carts").then((res) => res.json()),
-          fetch("http://localhost:5000/payments").then((res) => res.json()),
+          fetch("https://pharma-care-server-delta.vercel.app/carts").then((res) => res.json()),
+          fetch("https://pharma-care-server-delta.vercel.app/payments").then((res) => res.json()),
         ]);
 
         // Add status to carts and payments

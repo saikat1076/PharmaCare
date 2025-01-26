@@ -49,7 +49,7 @@ const EditModal2 = ({ setShowEditModal, editMedicine, queryClient }) => {
       console.log('Updating medicine with:', updatedMedicine);
 
       const response = await axios.put(
-        `http://localhost:5000/medicines/${editMedicine._id}`,
+        `https://pharma-care-server-delta.vercel.app/medicines/${editMedicine._id}`,
         updatedMedicine
       );
 

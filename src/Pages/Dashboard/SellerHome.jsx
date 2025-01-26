@@ -14,7 +14,7 @@ const SellerHome = () => {
 
     if (user?.email) { // Check if user is available and has an email
       // Fetch carts
-      fetch("http://localhost:5000/carts")
+      fetch("https://pharma-care-server-delta.vercel.app/carts")
         .then((res) => res.json())
         .then((data) => {
           const filteredCarts = data.filter(
@@ -25,7 +25,7 @@ const SellerHome = () => {
         .catch((error) => console.error("Error fetching carts:", error));
 
       // Fetch payments
-      fetch("http://localhost:5000/payments")
+      fetch("https://pharma-care-server-delta.vercel.app/payments")
         .then((res) => res.json())
         .then((data) => {
           const filteredPayments = data.filter(

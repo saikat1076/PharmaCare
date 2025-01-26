@@ -8,7 +8,7 @@ const ManageAdvertisements = () => {
   // Fetch medicines from the server
   useEffect(() => {
     axios
-      .get("http://localhost:5000/advertisement")
+      .get("https://pharma-care-server-delta.vercel.app/advertisement")
       .then((response) => {
         setMedicines(response.data);
       })
@@ -20,7 +20,7 @@ const ManageAdvertisements = () => {
   // Handle status change to 'Approved'
   const handleApprove = (medicineId) => {
     axios
-      .put(`http://localhost:5000/advertisement/${medicineId}`, { status: "Approved" })
+      .put(`https://pharma-care-server-delta.vercel.app/advertisement/${medicineId}`, { status: "Approved" })
       .then((response) => {
         setMedicines((prevMedicines) =>
           prevMedicines.map((medicine) =>
@@ -48,7 +48,7 @@ const ManageAdvertisements = () => {
   // Handle deleting an advertisement
   const handleDelete = (medicineId) => {
     axios
-      .delete(`http://localhost:5000/advertisement/${medicineId}`)
+      .delete(`https://pharma-care-server-delta.vercel.app/advertisement/${medicineId}`)
       .then((response) => {
         setMedicines((prevMedicines) =>
           prevMedicines.filter((medicine) => medicine._id !== medicineId)

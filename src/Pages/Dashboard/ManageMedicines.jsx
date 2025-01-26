@@ -18,7 +18,7 @@ const ManageMedicines = () => {
     if (!user?.email) {
       throw new Error('User email is not available');
     }
-    const response = await axios.get(`http://localhost:5000/medicines/${user.email}`);
+    const response = await axios.get(`https://pharma-care-server-delta.vercel.app/medicines/${user.email}`);
     return response.data;
   };
 
@@ -30,7 +30,7 @@ const ManageMedicines = () => {
 
   // Delete mutation
   const deletemedicines = async (id) => {
-    await axios.delete(`http://localhost:5000/medicines/${id}`);
+    await axios.delete(`https://pharma-care-server-delta.vercel.app/medicines/${id}`);
   };
 
   const deleteMutation = useMutation({
@@ -56,7 +56,7 @@ const ManageMedicines = () => {
 
   const addMedicinesMutation = useMutation({
     mutationFn: async (newMedicines) => {
-      const response = await axios.post('http://localhost:5000/medicines', newMedicines);
+      const response = await axios.post('https://pharma-care-server-delta.vercel.app/medicines', newMedicines);
       return response.data;
     },
     onSuccess: () => {

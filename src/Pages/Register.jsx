@@ -64,7 +64,7 @@ const Register = () => {
             };
 
             // Send data to backend using Axios
-            axios.post('http://localhost:5000/users', userData)
+            axios.post('https://pharma-care-server-delta.vercel.app/users', userData)
               .then(() => {
                 setUser({ ...user, displayName: name, photoURL: photo, role });
                 toast.success("Registration successful!");
@@ -97,7 +97,7 @@ const Register = () => {
         };
 
         // Send data to backend using Axios
-        axios.post('http://localhost:5000/users', userData)
+        axios.post('https://pharma-care-server-delta.vercel.app/users', userData)
           .then(() => {
             setUser(user);
             toast.success("Logged in successfully with Google!");

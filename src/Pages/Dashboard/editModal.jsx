@@ -30,7 +30,7 @@ const EditModal = ({ setShowEditModal, editCategory, queryClient }) => {
       console.log("Updating category with:", updatedCategory);
 
       const response = await axios.put(
-        `http://localhost:5000/category/${editCategory._id}`,
+        `https://pharma-care-server-delta.vercel.app/category/${editCategory._id}`,
         updatedCategory
       );
       console.log("Response from update:", response.data);

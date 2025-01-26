@@ -22,16 +22,7 @@ const AdminHome = () => {
       return res.data;
     }
   });
-
-  const { data: chartData = [] } = useQuery({
-    queryKey: ['order-stats'],
-    queryFn: async () => {
-      const res = await axiosSecure.get('/order-stats');
-      return res.data;
-    }
-  });
-
-  useEffect(() => {
+useEffect(() => {
     AOS.init(); // Initialize AOS for animations
   }, []);
 
