@@ -3,6 +3,7 @@ import { AuthContext } from '../Provider/AuthProvider';
 import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import useCart from '../Hooks/useCart';
+import icon from '../../src/assets/healthcare.png'
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -77,11 +78,14 @@ const Navbar = () => {
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                        className="menu menu-sm dropdown-content bg-black rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         {navLinks}
                     </ul>
                 </div>
-                <a className="text-xl text-green-500 font-bold">Pharma<span className='text-red-500'>Care</span></a>
+                <div className='flex gap-2'>
+                    <img className='h-[30px] w-[30px]' src={icon} alt="" />
+                    <h2 className='text-white font-bold text-xl'>PharmaCare</h2>
+                </div>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 space-x-3"> {/* Added space-x-3 here */}
