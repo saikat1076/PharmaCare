@@ -64,10 +64,6 @@ const Router = createBrowserRouter([
         element: <PrivateRoutes><Cart></Cart></PrivateRoutes>
       },
       {
-        path: "/update-profile",
-        element: <UpdateProfile></UpdateProfile>
-      },
-      {
         path: "payment",
         element: <Payments></Payments>
       },
@@ -94,6 +90,10 @@ const Router = createBrowserRouter([
     path: "dashboard",
     element: <Dashboard></Dashboard>,
     children: [
+      {
+        path: "update-profile",
+        element: <UpdateProfile></UpdateProfile>
+      },
 
       {
         path: "admin-home",

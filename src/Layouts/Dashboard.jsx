@@ -37,11 +37,11 @@ const Dashboard = () => {
 
     let defaultSection;
     if (role === 'admin') {
-        defaultSection = 'admin-home';
+        defaultSection = 'update-profile';
     } else if (role === 'seller') {
-        defaultSection = 'seller-home';
+        defaultSection = 'update-profile';
     } else {
-        defaultSection = 'payment-history';
+        defaultSection = 'update-profile';
     }
 
     return (
@@ -59,6 +59,11 @@ const Dashboard = () => {
                             {/* Admin-specific links */}
                             {role === 'admin' && (
                                 <>
+                                    <li>
+                                        <NavLink to="update-profile">
+                                            <FaHome /> MY Profile
+                                        </NavLink>
+                                    </li>
                                     <li>
                                         <NavLink to="admin-home">
                                             <FaHome /> AdminHome
@@ -90,6 +95,11 @@ const Dashboard = () => {
                             {/* Seller-specific links */}
                             {role === 'seller' && (
                                 <>
+                                 <li>
+                                        <NavLink to="update-profile">
+                                            <FaHome /> MY Profile
+                                        </NavLink>
+                                    </li>
                                     <li>
                                         <NavLink to="seller-home">
                                             <FaHome /> SellerHome
@@ -116,7 +126,11 @@ const Dashboard = () => {
                             {/* User-specific links */}
                             {role === 'user' && (
                                 <>
-
+                                     <li>
+                                        <NavLink to="update-profile">
+                                            <FaHome /> MY Profile
+                                        </NavLink>
+                                    </li>
                                     <li>
                                         <NavLink to="payment-history">
                                             <TbReportMoney /> Payment History
