@@ -1,152 +1,196 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
-import { MdLocationOn, MdPhone } from 'react-icons/md';
-import { HiOutlineMail } from 'react-icons/hi';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
+import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { MdLocationOn, MdPhone } from "react-icons/md";
+import { HiOutlineMail } from "react-icons/hi";
+import Title from "./Shared/Title";
 
 const ContactUsSection = () => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const [successMessage, setSuccessMessage] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+  const [successMessage, setSuccessMessage] = useState("");
 
-    const onSubmit = (data) => {
-        console.log(data); // Handle form submission
-        setSuccessMessage('Thank you for contacting us! We will get back to you soon.');
-        reset(); // Reset the form
-    };
+  const onSubmit = (data) => {
+    console.log(data);
+    setSuccessMessage("Thank you for reaching out! We will get back soon.");
+    reset();
+  };
 
-    return (
-        <section className="py-12 bg-gradient-to-r from-blue-500 to-teal-500" id="contact-us">
-            <div className="container mx-auto px-4">
-                <h2 className="text-4xl font-semibold text-center text-white mb-8">Get in Touch</h2>
+  return (
+    <section className="px-6">
+      <div className="container mx-auto">
+      <Title subHeading='Get In Touch' heading=' Your trusted partner for health & wellness'></Title>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                    {/* Contact Form */}
-                    <div className="w-full mx-auto bg-white p-4 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-500">
-                        {/* Success Message */}
-                        {successMessage && (
-                            <div className="p-4 mb-6 bg-green-100 text-green-700 border-l-4 border-green-500 rounded-md">
-                                <p>{successMessage}</p>
-                            </div>
-                        )}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Contact Form */}
+          <motion.div
+            className="bg-white dark:bg-gray-900 shadow-xl rounded-2xl p-8 transition-transform hover:scale-105"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            {successMessage && (
+              <motion.div
+                className="p-4 mb-6 text-green-700 bg-green-100 rounded-lg border-l-4 border-green-500"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              >
+                {successMessage}
+              </motion.div>
+            )}
 
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            {/* Name Field */}
-                            <div className="mb-4">
-                                <label htmlFor="name" className="block text-lg font-semibold text-gray-700">Full Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    placeholder="Enter your name"
-                                    className="input input-bordered w-full mt-2 rounded-lg shadow-md"
-                                    {...register('name', { required: "Name is required" })}
-                                />
-                                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
-                            </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+              <div>
+                <label className="block font-semibold text-gray-700 dark:text-white">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  className="w-full p-3 border rounded-lg shadow-sm dark:bg-gray-800 dark:text-white"
+                  {...register("name", { required: "Name is required" })}
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
 
-                            {/* Email Field */}
-                            <div className="mb-4">
-                                <label htmlFor="email" className="block text-lg font-semibold text-gray-700">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    placeholder="Enter your email"
-                                    className="input input-bordered w-full mt-2 rounded-lg shadow-md"
-                                    {...register('email', {
-                                        required: "Email is required",
-                                        pattern: {
-                                            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                                            message: "Enter a valid email address"
-                                        }
-                                    })}
-                                />
-                                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-                            </div>
+              <div>
+                <label className="block font-semibold text-gray-700 dark:text-white">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full p-3 border rounded-lg shadow-sm dark:bg-gray-800 dark:text-white"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value:
+                        /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                      message: "Enter a valid email",
+                    },
+                  })}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-                            {/* Phone Number Field */}
-                            <div className="mb-4">
-                                <label htmlFor="phone" className="block text-lg font-semibold text-gray-700">Phone Number</label>
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    placeholder="Enter your phone number"
-                                    className="input input-bordered w-full mt-2 rounded-lg shadow-md"
-                                    {...register('phone', {
-                                        required: "Phone number is required",
-                                        pattern: {
-                                            value: /^[0-9]{10}$/,
-                                            message: "Enter a valid 10-digit phone number"
-                                        }
-                                    })}
-                                />
-                                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
-                            </div>
+              <div>
+                <label className="block font-semibold text-gray-700 dark:text-white">
+                  Message
+                </label>
+                <textarea
+                  placeholder="Enter your message"
+                  className="w-full p-3 border rounded-lg shadow-sm dark:bg-gray-800 dark:text-white"
+                  {...register("message", { required: "Message is required" })}
+                />
+                {errors.message && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.message.message}
+                  </p>
+                )}
+              </div>
 
-                            {/* Message Field */}
-                            <div className="mb-4">
-                                <label htmlFor="message" className="block text-lg font-semibold text-gray-700">Message</label>
-                                <textarea
-                                    id="message"
-                                    placeholder="Enter your message"
-                                    className="textarea textarea-bordered w-full mt-2 rounded-lg shadow-md"
-                                    {...register('message', { required: "Message is required" })}
-                                />
-                                {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
-                            </div>
+              <motion.button
+                type="submit"
+                className="w-full py-3 font-bold text-white rounded-lg shadow-md bg-gradient-to-r from-indigo-500 to-purple-500 hover:scale-105 transition-transform"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                Send Message
+              </motion.button>
+            </form>
+          </motion.div>
 
-                            {/* Submit Button */}
-                            <button type="submit" className="btn btn-primary w-full mt-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-lg shadow-lg hover:bg-teal-600 transition-all duration-300">
-                                Submit
-                            </button>
-                        </form>
-                    </div>
+          {/* Contact Details */}
+          <motion.div
+            className="bg-gray-100 dark:bg-gray-800 shadow-xl rounded-2xl p-8 flex flex-col items-center transition-transform hover:scale-105"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+              PharmaCare
+            </h3>
+            <p className="text-center text-gray-600 dark:text-gray-300 mb-6">
+              Your trusted partner for health & wellness.
+            </p>
 
-                    {/* Contact Details Section */}
-          <div className="max-w-lg mx-auto bg-gradient-to-r from-blue-500 via-teal-400 to-blue-500 p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-500">
-                    <h3 className="text-4xl font-bold text-white mb-4 text-center">PharmaCare</h3>
-                    <p className="text-xl text-gray-100 mb-6 text-center">Your trusted partner for health and wellness, providing a wide range of medicinal products.</p>
-
-                    <div className="mb-6">
-                        <div className="flex items-center space-x-4 mb-4">
-                            <MdLocationOn className="text-teal-200" size={30} />
-                            <div>
-                                <h4 className="font-semibold text-white">Address</h4>
-                                <p className="text-lg text-gray-200">123 Pharma Street, Health City, PH 45678</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center space-x-4 mb-4">
-                            <MdPhone className="text-teal-200" size={30} />
-                            <div>
-                                <h4 className="font-semibold text-white">Phone</h4>
-                                <p className="text-lg text-gray-200">+123-456-7890</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center space-x-4 mb-4">
-                            <HiOutlineMail className="text-teal-200" size={30} />
-                            <div>
-                                <h4 className="font-semibold text-white">Email</h4>
-                                <p className="text-lg text-gray-200">support@pharmacare.com</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Social Links */}
-                    <div className="flex justify-center space-x-8 mt-6">
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-600 transition-all duration-300 transform hover:scale-125">
-                            <FaFacebook size={32} />
-                        </a>
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-pink-600 transition-all duration-300 transform hover:scale-125">
-                            <FaInstagram size={32} />
-                        </a>
-                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400 transition-all duration-300 transform hover:scale-125">
-                            <FaTwitter size={32} />
-                        </a>
-                    </div>
+            <div className="space-y-5 w-full">
+              <div className="flex items-center space-x-4">
+                <MdLocationOn className="text-indigo-500" size={28} />
+                <div>
+                  <h4 className="font-semibold text-gray-700 dark:text-white">
+                    Address
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    123 Pharma Street, Health City, PH 45678
+                  </p>
                 </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <MdPhone className="text-indigo-500" size={28} />
+                <div>
+                  <h4 className="font-semibold text-gray-700 dark:text-white">
+                    Phone
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    +123-456-7890
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <HiOutlineMail className="text-indigo-500" size={28} />
+                <div>
+                  <h4 className="font-semibold text-gray-700 dark:text-white">
+                    Email
+                  </h4>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    support@pharmacare.com
+                  </p>
+                </div>
+              </div>
             </div>
+
+            {/* Social Icons */}
+            <div className="flex space-x-6 mt-6">
+              <motion.a
+                href="https://facebook.com"
+                className="text-gray-600 dark:text-gray-300 hover:text-indigo-500 transition-transform hover:scale-110"
+              >
+                <FaFacebookF size={28} />
+              </motion.a>
+              <motion.a
+                href="https://instagram.com"
+                className="text-gray-600 dark:text-gray-300 hover:text-pink-500 transition-transform hover:scale-110"
+              >
+                <FaInstagram size={28} />
+              </motion.a>
+              <motion.a
+                href="https://twitter.com"
+                className="text-gray-600 dark:text-gray-300 hover:text-blue-400 transition-transform hover:scale-110"
+              >
+                <FaTwitter size={28} />
+              </motion.a>
+            </div>
+          </motion.div>
         </div>
-    </section >
+      </div>
+    </section>
   );
 };
 
