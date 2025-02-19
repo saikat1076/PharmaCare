@@ -33,6 +33,7 @@ const Navbar = () => {
                 <div className="badge badge-secondary">+{cart.length}</div>
             </button>
         </NavLink>
+        <NavLink className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`} to="/online-doctors">Online Doctors</NavLink>
         {user && user?.email ? 
             <NavLink to='/dashboard' className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`}>Dashboard</NavLink>
         : <NavLink className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`} to="/join-us">Join Us</NavLink>}
@@ -92,9 +93,6 @@ const Navbar = () => {
                                 </div>
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                                <li>
-                                    <NavLink to='/update-profile' className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "btn btn-sm bg-[#87d6e1] text-white text-sm ml-2" : "btn btn-sm"}`}>Update Profile</NavLink>
-                                </li>
                                 <li>
                                     <button onClick={logOut} className="btn btn-sm bg-[#87d6e1] text-white text-sm ml-2">Logout</button>
                                 </li>

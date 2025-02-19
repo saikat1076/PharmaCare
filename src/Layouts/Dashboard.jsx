@@ -6,22 +6,21 @@ import { AiTwotoneMedicineBox } from 'react-icons/ai';
 import { BiCategory } from "react-icons/bi";
 import { FcAdvertising } from 'react-icons/fc';
 import { TbReportMoney } from "react-icons/tb";
-import { MdOutlinePayment } from "react-icons/md";
 import { FiShoppingCart } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
 import { Helmet } from 'react-helmet';
 
 const Dashboard = () => {
-    const { user } = useContext(AuthContext);  // Get the user from AuthContext
-    const [role, setRole] = useState(null);    // State to store the user's role
+    const { user } = useContext(AuthContext);
+    const [role, setRole] = useState(null);
 
-    // Fetch the user's role from the backend
     useEffect(() => {
         const fetchRole = async () => {
             if (user && user.email) {
                 try {
                     const response = await fetch(`https://pharma-care-server-delta.vercel.app/users/role?email=${user.email}`);
                     const data = await response.json();
-                    setRole(data.role); // Store the role once fetched
+                    setRole(data.role);
                 } catch (error) {
                     console.error('Error fetching role:', error);
                 }
@@ -29,20 +28,13 @@ const Dashboard = () => {
         };
 
         fetchRole();
-    }, [user]);  // Dependency on user, so it fetches the role when the user is available
+    }, [user]);
 
     if (!role) {
-        return null; // You can return a loading spinner or fallback UI while role is being fetched
+        return null;
     }
 
-    let defaultSection;
-    if (role === 'admin') {
-        defaultSection = 'update-profile';
-    } else if (role === 'seller') {
-        defaultSection = 'update-profile';
-    } else {
-        defaultSection = 'update-profile';
-    }
+    let defaultSection = "update-profile";
 
     return (
         <>
@@ -51,122 +43,136 @@ const Dashboard = () => {
                 <title>PharmaCare | Dashboard</title>
                 <link rel="canonical" href="http://mysite.com/example" />
             </Helmet>
-            <div className="flex container">
-                {/* Dashboard Sidebar */}
-                <div className="w-40 min-h-screen bg-orange-400">
-                    <ul className="menu p-1">
-                        <div>
-                            {/* Admin-specific links */}
-                            {role === 'admin' && (
-                                <>
-                                    <li>
-                                        <NavLink to="update-profile">
-                                            <FaHome /> MY Profile
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="admin-home">
-                                            <FaHome /> AdminHome
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="manage-category">
-                                            <BiCategory /> Manage Category
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="manage-users">
-                                            <FaUser /> Manage Users
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="sales-report">
-                                            <TbReportMoney /> Sales Reports
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="manage-advertisements">
-                                            <FcAdvertising /> Manage Advertisements
-                                        </NavLink>
-                                    </li>
-                                </>
-                            )}
+            <div className="flex">
+                {/* Sidebar */}
+                <div className="min-h-screen bg-orange-400 p-2 md:w-20 lg:w-40 transition-all duration-300">
+                    <ul className="menu p-1 space-y-2">
+                        {/* Admin Links */}
+                        {role === 'admin' && (
+                            <>
+                                <li>
+                                    <NavLink to="update-profile" className="flex items-center gap-2">
+                                        <CgProfile className="text-lg" />
+                                        <span className="hidden lg:block">MY Profile</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="admin-home" className="flex items-center gap-2">
+                                        <FaHome className="text-lg" />
+                                        <span className="hidden lg:block">Admin Home</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="manage-category" className="flex items-center gap-2">
+                                        <BiCategory className="text-lg" />
+                                        <span className="hidden lg:block">Manage Category</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="manage-users" className="flex items-center gap-2">
+                                        <FaUser className="text-lg" />
+                                        <span className="hidden lg:block">Manage Users</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="sales-report" className="flex items-center gap-2">
+                                        <TbReportMoney className="text-lg" />
+                                        <span className="hidden lg:block">Sales Reports</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="manage-advertisements" className="flex items-center gap-2">
+                                        <FcAdvertising className="text-lg" />
+                                        <span className="hidden lg:block">Manage Ads</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        )}
 
-                            {/* Seller-specific links */}
-                            {role === 'seller' && (
-                                <>
-                                 <li>
-                                        <NavLink to="update-profile">
-                                            <FaHome /> MY Profile
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="seller-home">
-                                            <FaHome /> SellerHome
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="manage-medicines">
-                                            <AiTwotoneMedicineBox /> Manage Medicines
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="seller-report">
-                                            <TbReportMoney /> Seller Reports
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="seller-advertisement">
-                                            <FcAdvertising /> Seller Advertisements
-                                        </NavLink>
-                                    </li>
-                                </>
-                            )}
+                        {/* Seller Links */}
+                        {role === 'seller' && (
+                            <>
+                                <li>
+                                    <NavLink to="update-profile" className="flex items-center gap-2">
+                                        <CgProfile className="text-lg" />
+                                        <span className="hidden lg:block">MY Profile</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="seller-home" className="flex items-center gap-2">
+                                        <FaHome className="text-lg" />
+                                        <span className="hidden lg:block">Seller Home</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="manage-medicines" className="flex items-center gap-2">
+                                        <AiTwotoneMedicineBox className="text-lg" />
+                                        <span className="hidden lg:block">Manage Medicines</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="seller-report" className="flex items-center gap-2">
+                                        <TbReportMoney className="text-lg" />
+                                        <span className="hidden lg:block">Seller Reports</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="seller-advertisement" className="flex items-center gap-2">
+                                        <FcAdvertising className="text-lg" />
+                                        <span className="hidden lg:block">Seller Ads</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        )}
 
-                            {/* User-specific links */}
-                            {role === 'user' && (
-                                <>
-                                     <li>
-                                        <NavLink to="update-profile">
-                                            <FaHome /> MY Profile
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="payment-history">
-                                            <TbReportMoney /> Payment History
-                                        </NavLink>
-                                    </li>
-                                </>
-                            )}
+                        {/* User Links */}
+                        {role === 'user' && (
+                            <>
+                                <li>
+                                    <NavLink to="update-profile" className="flex items-center gap-2">
+                                        <CgProfile className="text-lg" />
+                                        <span className="hidden lg:block">MY Profile</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="payment-history" className="flex items-center gap-2">
+                                        <TbReportMoney className="text-lg" />
+                                        <span className="hidden lg:block">Payment History</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        )}
 
-                            {/* Shared links */}
-                            <div className="divider"></div>
-                            <li>
-                                <NavLink to="/">
-                                    <FaHome /> Home
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/shop">
-                                    <FaSearch /> Shop
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/cart">
-                                    <FiShoppingCart /> Cart
-                                </NavLink>
-                            </li>
-                        </div>
+                        {/* Common Links */}
+                        <div className="divider"></div>
+                        <li>
+                            <NavLink to="/" className="flex items-center gap-2">
+                                <FaHome className="text-lg" />
+                                <span className="hidden lg:block">Home</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/shop" className="flex items-center gap-2">
+                                <FaSearch className="text-lg" />
+                                <span className="hidden lg:block">Shop</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/cart" className="flex items-center gap-2">
+                                <FiShoppingCart className="text-lg" />
+                                <span className="hidden lg:block">Cart</span>
+                            </NavLink>
+                        </li>
                     </ul>
                 </div>
 
                 {/* Dashboard Content */}
                 <div className="flex-1 p-8">
-                    {/* Redirect to default section based on user role */}
                     <Navigate to={defaultSection} />
                     <Outlet />
                 </div>
-            </div></>
+            </div>
+        </>
     );
 };
 

@@ -26,6 +26,7 @@ import AdminHome from '../Pages/Dashboard/adminHome';
 import SellerHome from '../Pages/Dashboard/SellerHome';
 import JoinUs from '../Components/JoinUs';
 import PrivateRoutes from './PrivateRoutes';
+import OnlineDoctors from '../Pages/OnlineDoctors';
 
 
 
@@ -62,6 +63,10 @@ const Router = createBrowserRouter([
       {
         path: "/cart",
         element: <PrivateRoutes><Cart></Cart></PrivateRoutes>
+      },
+      {
+        path: "/online-doctors",
+        element: <PrivateRoutes><OnlineDoctors></OnlineDoctors></PrivateRoutes>
       },
       {
         path: "payment",

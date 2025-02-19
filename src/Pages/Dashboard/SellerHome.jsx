@@ -2,24 +2,24 @@ import React, { useContext, useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 import { AuthContext } from "../../Provider/AuthProvider";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const SellerHome = () => {
-  const { user } = useContext(AuthContext); // Get user details
+  const { user } = useContext(AuthContext);
   const [cartCount, setCartCount] = useState(0);
   const [paymentCount, setPaymentCount] = useState(0);
 
   useEffect(() => {
-    // Initialize AOS
     AOS.init();
 
-    if (user?.email) { // Check if user is available and has an email
+    if (user?.email) {
       // Fetch carts
       fetch("https://pharma-care-server-delta.vercel.app/carts")
         .then((res) => res.json())
         .then((data) => {
-          const filteredCarts = data.filter(
-            (item) => item.sellerEmail === user.email
-          );
+          const filteredCarts = data.filter((item) => item.sellerEmail === user.email);
           setCartCount(filteredCarts.length);
         })
         .catch((error) => console.error("Error fetching carts:", error));
@@ -29,25 +29,31 @@ const SellerHome = () => {
         .then((res) => res.json())
         .then((data) => {
           const filteredPayments = data.filter(
-            (item) =>
-              Array.isArray(item.SellerEmail) && item.SellerEmail.includes(user.email)
+            (item) => Array.isArray(item.SellerEmail) && item.SellerEmail.includes(user.email)
           );
-          console.log("Filtered Payments:", filteredPayments);
           setPaymentCount(filteredPayments.length);
         })
         .catch((error) => console.error("Error fetching payments:", error));
     }
-  }, [user?.email]); // Dependency array ensures useEffect runs again if user.email changes
+  }, [user?.email]);
 
   if (!user) {
-    return <div>Loading...</div>; // Show loading state if user is not yet available
+    return <div>Loading...</div>;
   }
+
+  // Chart Data
+  const chartData = [
+    { name: "Carts", value: cartCount },
+    { name: "Payments", value: paymentCount },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">
         Welcome to Your Dashboard
       </h1>
+
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl px-4">
         {/* Total Carts Card */}
         <div
@@ -75,8 +81,40 @@ const SellerHome = () => {
           </div>
         </div>
       </div>
+
+      {/* Graph Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 w-full max-w-4xl px-4">
+        {/* Bar Chart */}
+        <div className="bg-white p-6 rounded-lg shadow-lg">
+          <h3 className="text-xl font-semibold text-center mb-4">Sales Overview</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={chartData}>
+              <XAxis dataKey="name" stroke="#333" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value" fill="#8884d8" barSize={40} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Pie Chart */}
+        <div className="bg-white p-6 rounded-lg shadow-lg">
+          <h3 className="text-xl font-semibold text-center mb-4">Data Distribution</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#82ca9d">
+                {chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default SellerHome;
+export default SellerHome;
