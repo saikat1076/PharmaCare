@@ -7,6 +7,7 @@ import ContactUsSection from '../Components/ContactUsSection';
 import { Helmet } from 'react-helmet';
 import ReviewSection from '../Components/ReviewSection';
 import DownloadAppSection from '../Components/DownloadApp';
+import FAQSection from '../Components/FQSSection';
 
 
 const Home = () => {
@@ -23,6 +24,7 @@ const Home = () => {
            <DiscountedMedicines></DiscountedMedicines>
            <MedicineMarquee></MedicineMarquee>
            <ReviewSection></ReviewSection>
+           <FAQSection></FAQSection>
            <DownloadAppSection></DownloadAppSection>
            <ContactUsSection></ContactUsSection>
         </div></>
