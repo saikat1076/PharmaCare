@@ -81,7 +81,7 @@ const Shop = () => {
       <Helmet>
         <title>PharmaCare | Shop</title>
       </Helmet>
-      <div className="container mx-auto pt-10 px-2">
+      <div className="container mx-auto px-2">
         <Title subHeading="Medicine List" heading="Select Medicines you want to Order" />
 
         {/* Grid Layout for Responsive Cards */}

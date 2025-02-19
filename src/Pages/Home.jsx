@@ -5,6 +5,7 @@ import CategoryCard from '../Components/Category/CategoryCard';
 import DiscountedMedicines from '../Components/Discount.jsx/DiscountedMedicines';
 import ContactUsSection from '../Components/ContactUsSection';
 import { Helmet } from 'react-helmet';
+import ReviewSection from '../Components/ReviewSection';
 
 const Home = () => {
     return (
@@ -19,6 +20,7 @@ const Home = () => {
            <CategoryCard></CategoryCard>
            <DiscountedMedicines></DiscountedMedicines>
            <MedicineMarquee></MedicineMarquee>
+           <ReviewSection></ReviewSection>
            <ContactUsSection></ContactUsSection>
         </div></>
         

@@ -26,17 +26,20 @@ const Navbar = () => {
         {/* Common Navbar Links */}
         <NavLink className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`} to="/">Home</NavLink>
         <NavLink className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`} to="/shop">Shop</NavLink>
-        {user && user?.email ? <></> : <NavLink className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`} to="/join-us">Join Us</NavLink>}
+        
         <NavLink className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`} to="/cart">
             <button className='flex'>
                 <FaShoppingCart />
                 <div className="badge badge-secondary">+{cart.length}</div>
             </button>
         </NavLink>
+        {user && user?.email ? 
+            <NavLink to='/dashboard' className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`}>Dashboard</NavLink>
+        : <NavLink className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "text-amber-300 border-b-2 border-amber-300" : "text-white"}`} to="/join-us">Join Us</NavLink>}
     </>;
 
     return (
-        <div className="navbar min-h-0 fixed z-10 backdrop-blur-lg bg-opacity-30 lg:px-5 bg-black place-items-center">
+        <div className="navbar sticky top-0 z-50 backdrop-blur-lg lg:px-5 glass shadow-lg bg-black place-items-center">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -62,7 +65,7 @@ const Navbar = () => {
 
             <div className="navbar-end space-x-3">
                 {/* Language Dropdown with toggle */}
-                <div className="relative">
+                <div className="relative display sm:display-none">
                     <button className="btn btn-ghost text-white" onClick={toggleLanguageDropdown}>
                         Language: {language === 'en' ? 'English' : 'Spanish'}
                     </button>
@@ -89,9 +92,6 @@ const Navbar = () => {
                                 </div>
                             </div>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                                <li>
-                                    <NavLink to='/dashboard' className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "btn btn-sm bg-[#87d6e1] text-white text-sm ml-2" : "btn btn-sm"}`}>Dashboard</NavLink>
-                                </li>
                                 <li>
                                     <NavLink to='/update-profile' className={({ isActive }) => `font-bold text-base leading-none ${isActive ? "btn btn-sm bg-[#87d6e1] text-white text-sm ml-2" : "btn btn-sm"}`}>Update Profile</NavLink>
                                 </li>
