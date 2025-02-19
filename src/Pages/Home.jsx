@@ -6,6 +6,8 @@ import DiscountedMedicines from '../Components/Discount.jsx/DiscountedMedicines'
 import ContactUsSection from '../Components/ContactUsSection';
 import { Helmet } from 'react-helmet';
 import ReviewSection from '../Components/ReviewSection';
+import DownloadAppSection from '../Components/DownloadApp';
+
 
 const Home = () => {
     return (
@@ -21,6 +23,7 @@ const Home = () => {
            <DiscountedMedicines></DiscountedMedicines>
            <MedicineMarquee></MedicineMarquee>
            <ReviewSection></ReviewSection>
+           <DownloadAppSection></DownloadAppSection>
            <ContactUsSection></ContactUsSection>
         </div></>
         
