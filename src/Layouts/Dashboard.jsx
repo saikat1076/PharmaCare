@@ -41,123 +41,119 @@ const Dashboard = () => {
     } else if (role === 'seller') {
         defaultSection = 'seller-home';
     } else {
-        defaultSection = 'payment';
+        defaultSection = 'payment-history';
     }
 
     return (
         <>
-        <Helmet>
+            <Helmet>
                 <meta charSet="utf-8" />
                 <title>PharmaCare | Dashboard</title>
                 <link rel="canonical" href="http://mysite.com/example" />
             </Helmet>
-        <div className="flex container">
-            {/* Dashboard Sidebar */}
-            <div className="w-40 min-h-screen bg-orange-400">
-                <ul className="menu p-1">
-                    <div>
-                        {/* Admin-specific links */}
-                        {role === 'admin' && (
-                            <>
-                                <li>
-                                    <NavLink to="admin-home">
-                                        <FaHome /> AdminHome
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="manage-category">
-                                    <BiCategory /> Manage Category
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="manage-users">
-                                        <FaUser /> Manage Users
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="sales-report">
-                                    <TbReportMoney /> Sales Reports
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="manage-advertisements">
-                                    <FcAdvertising /> Manage Advertisements
-                                    </NavLink>
-                                </li>
-                            </>
-                        )}
+            <div className="flex container">
+                {/* Dashboard Sidebar */}
+                <div className="w-40 min-h-screen bg-orange-400">
+                    <ul className="menu p-1">
+                        <div>
+                            {/* Admin-specific links */}
+                            {role === 'admin' && (
+                                <>
+                                    <li>
+                                        <NavLink to="admin-home">
+                                            <FaHome /> AdminHome
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="manage-category">
+                                            <BiCategory /> Manage Category
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="manage-users">
+                                            <FaUser /> Manage Users
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="sales-report">
+                                            <TbReportMoney /> Sales Reports
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="manage-advertisements">
+                                            <FcAdvertising /> Manage Advertisements
+                                        </NavLink>
+                                    </li>
+                                </>
+                            )}
 
-                        {/* Seller-specific links */}
-                        {role === 'seller' && (
-                            <>
-                                <li>
-                                    <NavLink to="seller-home">
-                                        <FaHome /> SellerHome
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="manage-medicines">
-                                    <AiTwotoneMedicineBox /> Manage Medicines
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="seller-report">
-                                    <TbReportMoney /> Seller Reports
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="seller-advertisement">
-                                    <FcAdvertising /> Seller Advertisements
-                                    </NavLink>
-                                </li>
-                            </>
-                        )}
+                            {/* Seller-specific links */}
+                            {role === 'seller' && (
+                                <>
+                                    <li>
+                                        <NavLink to="seller-home">
+                                            <FaHome /> SellerHome
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="manage-medicines">
+                                            <AiTwotoneMedicineBox /> Manage Medicines
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="seller-report">
+                                            <TbReportMoney /> Seller Reports
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="seller-advertisement">
+                                            <FcAdvertising /> Seller Advertisements
+                                        </NavLink>
+                                    </li>
+                                </>
+                            )}
 
-                        {/* User-specific links */}
-                        {role === 'user' && (
-                            <>
-                                <li>
-                                    <NavLink to="payment">
-                                    <MdOutlinePayment /> Payment
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="payment-history">
-                                    <TbReportMoney /> Payment History
-                                    </NavLink>
-                                </li>
-                            </>
-                        )}
+                            {/* User-specific links */}
+                            {role === 'user' && (
+                                <>
 
-                        {/* Shared links */}
-                        <div className="divider"></div>
-                        <li>
-                            <NavLink to="/">
-                                <FaHome /> Home
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/shop">
-                                <FaSearch /> Shop
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/cart">
-                            <FiShoppingCart /> Cart
-                            </NavLink>
-                        </li>
-                    </div>
-                </ul>
-            </div>
+                                    <li>
+                                        <NavLink to="payment-history">
+                                            <TbReportMoney /> Payment History
+                                        </NavLink>
+                                    </li>
+                                </>
+                            )}
 
-            {/* Dashboard Content */}
-            <div className="flex-1 p-8">
-                {/* Redirect to default section based on user role */}
-                <Navigate to={defaultSection} />
-                <Outlet />
-            </div>
-        </div></>
+                            {/* Shared links */}
+                            <div className="divider"></div>
+                            <li>
+                                <NavLink to="/">
+                                    <FaHome /> Home
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/shop">
+                                    <FaSearch /> Shop
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/cart">
+                                    <FiShoppingCart /> Cart
+                                </NavLink>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+
+                {/* Dashboard Content */}
+                <div className="flex-1 p-8">
+                    {/* Redirect to default section based on user role */}
+                    <Navigate to={defaultSection} />
+                    <Outlet />
+                </div>
+            </div></>
     );
 };
 
-export default Dashboard;
+export default Dashboard;

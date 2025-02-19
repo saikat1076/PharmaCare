@@ -48,10 +48,10 @@ const Cart = () => {
                 <link rel="canonical" href="http://mysite.com/example" />
             </Helmet>
         <div>
-            <div className="flex justify-evenly mb-8 lg:pt-16">
+            <div className="flex justify-evenly mb-8 pt-16">
                 <h2 className="text-4xl">Items: {cart.length}</h2>
                 <h2 className="text-4xl">Total perUnitPrice: {totalPerUnitPrice}</h2>
-                {cart.length ? <Link to="/dashboard/payment">
+                {cart.length ? <Link to="/payment">
                     <button className="btn btn-primary">Pay</button>
                 </Link>:
                 <button disabled className="btn btn-primary">Pay</button>

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";  // Import useParams to get the dynamic category name from the URL
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Title from "../Components/Shared/Title";
 import { Modal } from "../Components/Shared/Modal";
-import { AiOutlineEye, AiOutlineShoppingCart } from 'react-icons/ai';   // Modal for displaying medicine details
+import { AiOutlineEye, AiOutlineShoppingCart } from "react-icons/ai";
 import useAxiosPublic from "../Hooks/UseAxiosPublic";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
@@ -11,33 +11,25 @@ import useCart from "../Hooks/useCart";
 import { Helmet } from "react-helmet";
 
 const CategoryDetails = () => {
-  const { category } = useParams();  // Get the category name from the URL
+  const { category } = useParams();
   const [medicines, setMedicines] = useState([]);
-  const {user} = useContext(AuthContext)
-  const [selectedMedicine, setSelectedMedicine] = useState(null); 
+  const { user } = useContext(AuthContext);
+  const [selectedMedicine, setSelectedMedicine] = useState(null);
   const axiosPublic = useAxiosPublic();
-  const [, refetch] = useCart(); // Track selected medicine for modal
-
-  // Fetch medicines based on the selected category
-  const fetchMedicines = async () => {
-    try {
-      const response = await axiosPublic.get(`/medicines/?category=${category}`);
-      setMedicines(response.data);
-    } catch (error) {
-      console.error("Error fetching medicines:", error);
-    }
-  };
+  const [, refetch] = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchMedicines();  // Fetch medicines when the component loads
+    axiosPublic
+      .get(`/medicines/?category=${category}`)
+      .then((response) => setMedicines(response.data))
+      .catch((error) => console.error("Error fetching medicines:", error));
   }, [category]);
 
-  // Handle eye button click (view medicine details)
   const handleEyeClick = (medicine) => {
-    setSelectedMedicine(medicine);  // Show medicine details in modal
+    setSelectedMedicine(medicine);
   };
 
-  // Handle select button click (add medicine to cart)
   const handleCartClick = (medicine) => {
     if (user && user.email) {
       const cartItem = {
@@ -45,26 +37,23 @@ const CategoryDetails = () => {
         email: user.email,
         itemName: medicine.itemName,
         genericName: medicine.genericName,
-        shortDescription: medicine.shortDescription,
         image: medicine.image,
         category: medicine.category,
         company: medicine.company,
-        itemMassUnit: medicine.itemMassUnit,
         perUnitPrice: medicine.perUnitPrice,
         discountPercentage: medicine.discountPercentage,
-        sellerEmail: medicine.sellerEmail,
       };
 
-      axios.post('https://pharma-care-server-delta.vercel.app/carts', cartItem)
-        .then(res => {
-          console.log(res.data)
+      axios
+        .post("https://pharma-care-server-delta.vercel.app/carts", cartItem)
+        .then((res) => {
           if (res.data.insertedId) {
             Swal.fire({
               position: "center",
               icon: "success",
               title: `${medicine.itemName} added to your cart`,
               showConfirmButton: false,
-              timer: 1500
+              timer: 1500,
             });
             refetch();
           }
@@ -77,10 +66,10 @@ const CategoryDetails = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, login!"
+        confirmButtonText: "Yes, login!",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/auth/login');
+          navigate("/auth/login");
         }
       });
     }
@@ -88,66 +77,73 @@ const CategoryDetails = () => {
 
   return (
     <>
-    <Helmet>
-                <meta charSet="utf-8" />
-                <title>PharmaCare | Category Details</title>
-                <link rel="canonical" href="http://mysite.com/example" />
-            </Helmet>
-    <div className="container mx-auto px-4 lg:pt-10">
-    <Title subHeading={`Medicines in ${category}`} heading={`Explore ${category} Medicines`} />
-   <table className="table-auto w-full border-collapse text-sm shadow-md rounded-lg">
-             <thead className="bg-gray-100">
-               <tr>
-                 <th className="px-4 py-2 border">Image</th>
-                 <th className="px-4 py-2 border">Item Name</th>
-                 <th className="px-4 py-2 border">Generic Name</th>
-                 <th className="px-4 py-2 border">Company</th>
-                 <th className="px-4 py-2 border">Category</th>
-                 <th className="px-4 py-2 border">Price</th>
-                 <th className="px-4 py-2 border">Actions</th>
-               </tr>
-             </thead>
-             <tbody>
-               {medicines.map((medicine) => (
-                 <tr key={medicine._id} className="hover:bg-gray-50">
-                   <td className="px-4 py-2 border text-center">
-                     <img src={medicine.image} alt={medicine.itemName} className="w-20 h-16 object-cover  mx-auto" />
-                   </td>
-                   <td className="px-4 py-2 border">{medicine.itemName}</td>
-                   <td className="px-4 py-2 border">{medicine.genericName}</td>
-                   <td className="px-4 py-2 border">{medicine.company}</td>
-                   <td className="px-4 py-2 border">{medicine.category}</td>
-                   <td className="px-4 py-2 text-red-500 font-bold border">${medicine.perUnitPrice}</td>
-                   <td className="px-4 py-7 border flex justify-center items-center space-x-4">
-                     {/* Eye button */}
-                     <button
-                       className="text-blue-500 hover:text-blue-700"
-                       onClick={() => handleEyeClick(medicine)}
-                     >
-                       <AiOutlineEye size={24} />
-                     </button>
-   
-                     {/* Cart button */}
-                     <button
-                  className="text-green-500 hover:text-green-700"
-                  onClick={() => handleCartClick(medicine)}
-                >
-                  <AiOutlineShoppingCart size={24} />
-                </button>
-                   </td>
-                 </tr>
-               ))}
-             </tbody>
-           </table>
+      <Helmet>
+        <title>PharmaCare | {category} Medicines</title>
+      </Helmet>
 
-    {/* Modal for showing selected medicine details */}
-    {selectedMedicine && (
-      <Modal
-        medicine={selectedMedicine}
-        onClose={() => setSelectedMedicine(null)}
-      />
-    )}
-  </div></>
+      <div className="container mx-auto px-4 pt-10">
+        <Title subHeading={`Medicines in ${category}`} heading={`Explore ${category} Medicines`} />
+
+        {/* Responsive Card Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+          {medicines.map((medicine) => (
+            <div key={medicine._id} className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-transform transform hover:scale-105">
+              {/* Image */}
+              <img src={medicine.image} alt={medicine.itemName} className="w-full h-48 object-cover" />
+
+              {/* Discount Badge */}
+              {medicine.discountPercentage > 0 && (
+                <div className="absolute top-2 left-2 bg-red-500 text-white text-xs md:text-sm px-3 py-1 rounded-full shadow-md">
+                  {medicine.discountPercentage}% OFF
+                </div>
+              )}
+
+              {/* Medicine Details */}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-800">{medicine.itemName}</h3>
+                <p className="text-sm text-gray-500">{medicine.genericName}</p>
+                <p className="text-sm text-gray-500">{medicine.company}</p>
+
+                {/* Price */}
+                <div className="flex items-center justify-between mt-3">
+                  {medicine.discountPercentage > 0 ? (
+                    <>
+                      <span className="text-lg font-bold text-red-500">
+                        ${(medicine.perUnitPrice * (1 - medicine.discountPercentage / 100)).toFixed(2)}
+                      </span>
+                      <span className="text-sm line-through text-gray-400">${medicine.perUnitPrice}</span>
+                    </>
+                  ) : (
+                    <span className="text-lg font-bold text-green-600">${medicine.perUnitPrice}</span>
+                  )}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-between mt-4">
+                  <button
+                    className="bg-blue-500 text-white px-3 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-600 transition"
+                    onClick={() => handleEyeClick(medicine)}
+                  >
+                    <AiOutlineEye size={20} />
+                    <span className="text-sm">View</span>
+                  </button>
+                  <button
+                    className="bg-green-500 text-white px-3 py-2 rounded-lg flex items-center space-x-2 hover:bg-green-600 transition"
+                    onClick={() => handleCartClick(medicine)}
+                  >
+                    <AiOutlineShoppingCart size={20} />
+                    <span className="text-sm">Add</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Modal */}
+        {selectedMedicine && <Modal medicine={selectedMedicine} onClose={() => setSelectedMedicine(null)} />}
+      </div>
+    </>
   );
 };
 

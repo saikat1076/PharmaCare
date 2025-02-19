@@ -67,6 +67,10 @@ const Router = createBrowserRouter([
         path: "/update-profile",
         element: <UpdateProfile></UpdateProfile>
       },
+      {
+        path: "payment",
+        element: <Payments></Payments>
+      },
 
     ]
   },
@@ -127,10 +131,7 @@ const Router = createBrowserRouter([
         path: "seller-advertisement",
         element: <SellerAdvertisement></SellerAdvertisement>
       },
-      {
-        path: "payment",
-        element: <Payments></Payments>
-      },
+      
       {
         path: "payment-history",
         element: <PaymentHistory></PaymentHistory>
