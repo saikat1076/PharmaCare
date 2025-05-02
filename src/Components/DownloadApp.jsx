@@ -21,7 +21,6 @@ const DownloadAppSection = () => {
             text: `A download link has been sent to +88 ${phoneNumber}`,
         });
 
-        // Clear the input field after sending
         setPhoneNumber("");
     };
 
@@ -31,7 +30,7 @@ const DownloadAppSection = () => {
     Your Phone'></Title>
             <div className="flex flex-col md:flex-row items-center justify-between bg-gray-100 p-10 rounded-lg shadow-lg mx-auto">
 
-                {/* Left Side - Mobile App Image */}
+
 
                 <div className="w-full md:w-1/2 flex justify-center">
                     <img
@@ -41,7 +40,7 @@ const DownloadAppSection = () => {
                     />
                 </div>
 
-                {/* Right Side - Text & Download Buttons */}
+
                 <div className="w-full md:w-1/2 text-center md:text-left space-y-4">
                     <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
                         Order Medicines From <br className="hidden md:block" /> Your Phone
@@ -50,7 +49,6 @@ const DownloadAppSection = () => {
                         Enter your mobile number to receive the app download link
                     </p>
 
-                    {/* Phone Input */}
                     <div className="flex items-center justify-center md:justify-start border-b-2 border-gray-400 py-2">
                         <span className="text-lg text-gray-700 pr-2">+88</span>
                         <input
@@ -62,7 +60,7 @@ const DownloadAppSection = () => {
                         />
                     </div>
 
-                    {/* Send Button */}
+
                     <button
                         className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-5 rounded-lg transition"
                         onClick={handleSendClick}
@@ -70,7 +68,6 @@ const DownloadAppSection = () => {
                         Send
                     </button>
 
-                    {/* Download Buttons */}
                     <div className="flex justify-center md:justify-start space-x-3">
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"

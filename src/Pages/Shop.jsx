@@ -13,6 +13,7 @@ import { Helmet } from "react-helmet";
 const Shop = () => {
   const [medicines, setMedicines] = useState([]);
   const [selectedMedicine, setSelectedMedicine] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -76,6 +77,16 @@ const Shop = () => {
     }
   };
 
+  const handleSort = () => {
+    const sortedMedicines = [...medicines].sort((a, b) => {
+      return sortOrder === "asc"
+        ? a.perUnitPrice - b.perUnitPrice
+        : b.perUnitPrice - a.perUnitPrice;
+    });
+    setMedicines(sortedMedicines);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  };
+
   return (
     <>
       <Helmet>
@@ -83,6 +94,16 @@ const Shop = () => {
       </Helmet>
       <div className="container mx-auto px-2">
         <Title subHeading="Medicine List" heading="Select Medicines you want to Order" />
+
+        {/* Sort Button */}
+        <div className="text-right mb-4">
+          <button
+            onClick={handleSort}
+            className="bg-gray-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-600 transition-all"
+          >
+            Sort by Price ({sortOrder === "asc" ? "Low to High" : "High to Low"})
+          </button>
+        </div>
 
         {/* Grid Layout for Responsive Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
