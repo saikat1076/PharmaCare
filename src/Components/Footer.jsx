@@ -7,15 +7,11 @@ const Footer = () => {
   return (
     <footer className="bg-black text-white py-8">
       <div className="container mx-auto px-4">
-        {/* Footer Content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
-          {/* PharmaCare Info */}
           <div>
             <h3 className="text-3xl font-semibold mb-4">PharmaCare</h3>
             <p className="text-lg">Your trusted partner for health and wellness, providing a wide range of medicinal products.</p>
           </div>
-
-          {/* Contact Info */}
           <div>
             <h4 className="text-2xl font-semibold mb-4">Contact Us</h4>
             <div className="mb-4 flex items-center justify-center sm:justify-start">
@@ -50,8 +46,6 @@ const Footer = () => {
               </a>
             </div>
           </div>
-
-          {/* Newsletter */}
           <div>
             <h4 className="text-2xl font-semibold mb-4">Newsletter</h4>
             <p className="text-lg mb-4">Subscribe to our newsletter for the latest updates on health and wellness!</p>
@@ -68,7 +62,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Footer Bottom */}
         <div className="border-t border-teal-400 pt-4 mt-8 text-center">
           <p className="text-lg">© 2025 PharmaCare. All rights reserved.</p>
         </div>
