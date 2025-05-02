@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
-// Import Swiper React components
+
 import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
+
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
-import 'swiper/css/autoplay'; // Import autoplay styles
+import 'swiper/css/autoplay';
 
-// Import required modules
+
 import { FreeMode, Thumbs, Autoplay } from 'swiper/modules';
 
 const CustomSwiper = () => {
   const [advertisements, setAdvertisements] = useState([]);
-  const [thumbsSwiper, setThumbsSwiper] = useState(null); // Correctly define setThumbsSwiper
+  const [thumbsSwiper, setThumbsSwiper] = useState(null); 
 
   useEffect(() => {
-    // Fetch advertisements data from the API
+
     fetch('https://pharma-care-server-delta.vercel.app/advertisement')
       .then((res) => res.json())
       .then((data) => {
-        // Filter advertisements with status "Approved"
+ 
         const approvedAds = data.filter(ad => ad.status === 'Approved');
         setAdvertisements(approvedAds);
       })
@@ -31,18 +31,18 @@ const CustomSwiper = () => {
 
   return (
     <div className="relative">
-      {/* Main Swiper for large images */}
+
       <SwiperComponent
         style={{
           '--swiper-pagination-color': '#fff',
         }}
         spaceBetween={10}
         autoplay={{
-          delay: 5000, // Time in milliseconds (5 seconds) between slides
-          disableOnInteraction: false, // Ensures autoplay continues after user interaction
+          delay: 5000, 
+          disableOnInteraction: false, 
         }}
         thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Thumbs, Autoplay]} // Added Autoplay module
+        modules={[FreeMode, Thumbs, Autoplay]} 
         className="mySwiper2"
       >
         {advertisements.map((ad) => (
@@ -53,18 +53,15 @@ const CustomSwiper = () => {
                 alt={ad.description}
                 className="w-full max-h-[500px] object-contain"
               />
-              {/* <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent text-white p-4">
-                <p className="text-lg font-semibold">{ad.description}</p>
-                <p className="mt-2 text-sm">{`Status: ${ad.status}`}</p>
-              </div> */}
+              
             </div>
           </SwiperSlide>
         ))}
       </SwiperComponent>
       
-      {/* Thumbnails Swiper for small image previews */}
+
       <SwiperComponent
-        onSwiper={setThumbsSwiper}  // Update the thumbsSwiper when Swiper is initialized
+        onSwiper={setThumbsSwiper}  
         spaceBetween={10}
         slidesPerView={5}
         freeMode={true}
