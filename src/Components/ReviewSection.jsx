@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import Title from "./Shared/Title";
 
-// Fake JSON Data (Sample Reviews)
 const reviews = [
   {
     id: 1,
@@ -52,7 +51,7 @@ const reviews = [
   },
 ];
 
-// Star Rating Component
+
 const StarRating = ({ rating }) => {
   return (
     
@@ -70,7 +69,6 @@ const StarRating = ({ rating }) => {
   );
 };
 
-// Single Review Card
 const ReviewCard = ({ name, image, rating, review }) => {
   return (
     <motion.div
@@ -91,7 +89,6 @@ const ReviewCard = ({ name, image, rating, review }) => {
   );
 };
 
-// Main Review Section
 const ReviewSection = () => {
   return (
     <div className="py-5 bg-gray-50">
