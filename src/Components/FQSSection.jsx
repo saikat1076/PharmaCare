@@ -1,32 +1,32 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { FaPlus, FaMinus } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Title from "./Shared/Title";
 
 const faqs = [
   {
-    question: "What kind of medicines are available at PharmaCare?",
-    answer: "PharmaCare offers a wide range of medicines, including prescription drugs, OTC medications, and wellness products.",
+    question: "What types of medications are available at PharmaCare?",
+    answer: "PharmaCare provides a comprehensive selection of medications, including prescription drugs, over-the-counter medications, and wellness products to support your health needs.",
   },
   {
-    question: "Are injectable medicines available at PharmaCare?",
-    answer: "Yes, we provide a variety of injectable medicines with proper guidance and prescription verification.",
+    question: "Does PharmaCare offer injectable medications?",
+    answer: "Yes, PharmaCare supplies a range of injectable medications, dispensed with thorough prescription verification and professional guidance.",
   },
   {
-    question: "Do regular customers get any discount on the medicine price?",
-    answer: "Yes, we offer special discounts and loyalty rewards for our regular customers.",
+    question: "Are discounts available for regular customers?",
+    answer: "PharmaCare values its loyal customers and offers exclusive discounts and rewards through our loyalty program.",
   },
   {
-    question: "Can I pay through mobile banking app/credit card?",
-    answer: "Yes, we accept payments via mobile banking, credit/debit cards, and cash on delivery.",
+    question: "What payment methods does PharmaCare accept?",
+    answer: "We accept a variety of payment methods, including mobile banking apps, credit/debit cards, and cash on delivery for your convenience.",
   },
   {
-    question: "Do I need a prescription for antibiotics or antihypertensive drugs?",
-    answer: "Yes, prescription drugs require a valid prescription before purchase.",
+    question: "Is a prescription required for antibiotics or antihypertensive medications?",
+    answer: "Yes, a valid prescription is required for all prescription medications, including antibiotics and antihypertensives, to ensure safe dispensing.",
   },
   {
-    question: "Do you deliver outside Dhaka?",
-    answer: "Currently, we provide deliveries across Bangladesh, including areas outside Dhaka.",
+    question: "Does PharmaCare deliver outside Dhaka?",
+    answer: "PharmaCare proudly offers nationwide delivery services, including regions beyond Dhaka, to ensure access to medications across Bangladesh.",
   },
 ];
 
@@ -38,34 +38,44 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="mx-auto px-8">
-      <Title subHeading='Frequently Asked Questions' heading='Best Online Medicine Shop'></Title>
+    <section className="max-w-5xl mx-auto px-6 py-12">
+      <Title
+        subHeading="Frequently Asked Questions"
+        heading="Your Trusted Online Pharmacy"
+      />
       <div className="space-y-4">
         {faqs.map((faq, index) => (
           <motion.div
             key={index}
-            className="border rounded-lg shadow-lg overflow-hidden"
+            className="border border-gray-200 rounded-lg shadow-sm overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <button
               onClick={() => toggleFAQ(index)}
-              className="w-full flex justify-between items-center p-4 text-left text-lg font-semibold bg-gray-100 hover:bg-blue-50 transition"
+              className="w-full flex justify-between items-center p-5 text-left text-lg font-medium text-gray-900 bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
             >
-              {faq.question}
-              {openIndex === index ? <FaMinus className="text-blue-600" /> : <FaPlus className="text-gray-600" />}
+              <span>{faq.question}</span>
+              {openIndex === index ? (
+                <FaChevronUp className="text-blue-600" />
+              ) : (
+                <FaChevronDown className="text-gray-500" />
+              )}
             </button>
-            {openIndex === index && (
-              <motion.div
-                className="p-4 bg-white text-gray-700"
-                initial={{ height: 0 }}
-                animate={{ height: "auto" }}
-                transition={{ duration: 0.3 }}
-              >
-                {faq.answer}
-              </motion.div>
-            )}
+            <AnimatePresence>
+              {openIndex === index && (
+                <motion.div
+                  className="p-5 bg-white text-gray-600 leading-relaxed"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {faq.answer}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         ))}
       </div>
